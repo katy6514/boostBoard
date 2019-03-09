@@ -1,0 +1,21 @@
+{
+  "name": "Boost Board",
+  "version": "1.0",
+  "description": "Priority Task Tracker",
+  "author": "Katherine Wyman",
+  "manifest_version": 2,
+  "incognito": "split",
+  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "options_page": "options.html",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Have a good day"
+  }
+}

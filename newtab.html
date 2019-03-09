@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="./main.css" />
+    <link rel="stylesheet" type="text/css" href="./responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="section group">
+        <div class="col span_5_of_5 greeting-container">
+          <h1 class="greeting" id="greeting">HEY DO THESE THINGS</h1>
+        </div>
+      </div>
+      <div class="section group">
+        <div class="col span_1_of_5"></div>
+        <div id="mainColumn" class="col span_3_of_5">
+          <div class="rightAligned">
+            <button id="getInspired">
+              psst... need a boost?
+            </button>
+          </div>
+          <!-- <div class="loader">Loading...</div> -->
+          <img id="inspirobot" />
+          <h2 id="mainHeader">Priorities:</h2>
+          <ul id="list"></ul>
+          <form class="todo-form" id="todo-form" action="#">
+            <input
+              class="todo-input"
+              type="text"
+              id="todo-item"
+              placeholder="Do this thing..."
+              autofocus
+            />
+            <i class="material-icons md-48 md-light" id="todo-add-button">
+              add
+            </i>
+            <!-- <input type="button" value="add" /> -->
+          </form>
+        </div>
+        <div class="col span_1_of_5"></div>
+      </div>
+      <div class="push"></div>
+    </div>
+    <footer class="footer">
+      Backgrounds provided by the cool people at
+      <a href="https://unsplash.com/">Unsplash</a>
+    </footer>
+    <script src="./jquery-3.3.1.min.js"></script>
+
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="./main.js"
+    ></script>
+  </body>
+</html>
