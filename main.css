@@ -23,10 +23,12 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
+  background-color: black;
 }
 h1,
 h2,
 h3 {
+  margin: 20px 0;
   color: #fff;
   text-align: center;
 }
@@ -34,14 +36,14 @@ h3 {
 .greeting-container {
   justify-content: center;
   align-content: center;
-  text-shadow: 0px 0px 20px black;
+  text-shadow: 0px 0px 100px black;
 }
 .greeting {
   font-size: 50px;
 }
 
 #mainHeader {
-  font-size: 35px;
+  /* font-size: 35px; */
   text-shadow: 0px 0px 10px grey;
 }
 #mainColumn {
@@ -50,18 +52,14 @@ h3 {
   min-height: 400px;
 }
 
-.rightAligned {
-  width: 100%;
-  text-align: right;
-  color: white;
-}
-
 button#getInspired {
   background: none; /* This removes the default background */
   color: cyan;
   border: none;
   font-size: 12px;
   cursor: pointer;
+  display: none;
+  margin: auto;
 }
 
 img#inspirobot {
@@ -106,18 +104,19 @@ input {
   flex-grow: 0;
   font-size: 48px;
   vertical-align: bottom;
+  cursor: pointer;
 }
 .material-icons.md-light {
   color: rgba(255, 255, 255, 1);
 }
 
-#list {
-  color: cyan;
+ul {
   margin: 20px 40px;
   padding: 20px;
   list-style-type: none;
   font-size: 16px;
   color: white;
+  display: none;
 }
 #list li {
   border-bottom: 1px solid white;
@@ -141,6 +140,10 @@ input {
   display: inline-block; */
 }
 
+#completed {
+  border-radius: 4px;
+  background-color: rgba(79, 245, 145, 0.747);
+}
 .loader,
 .loader:after {
   border-radius: 50%;

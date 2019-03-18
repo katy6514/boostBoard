@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Test</title>
+    <title>BoostBoard</title>
     <link rel="stylesheet" type="text/css" href="./main.css" />
     <link rel="stylesheet" type="text/css" href="./responsive.css" />
     <link
@@ -19,28 +19,33 @@
       <div class="section group">
         <div class="col span_1_of_5"></div>
         <div id="mainColumn" class="col span_3_of_5">
-          <div class="rightAligned">
-            <button id="getInspired">
-              psst... need a boost?
-            </button>
-          </div>
+          <h2 id="mainHeader">Priorities:</h2>
           <!-- <div class="loader">Loading...</div> -->
           <img id="inspirobot" />
-          <h2 id="mainHeader">Priorities:</h2>
+          <button id="getInspired"></button>
           <ul id="list"></ul>
           <form class="todo-form" id="todo-form" action="#">
             <input
               class="todo-input"
               type="text"
               id="todo-item"
-              placeholder="Do this thing..."
-              autofocus
+              placeholder="Do this very important thing..."
+              autocomplete="off"
             />
+
             <i class="material-icons md-48 md-light" id="todo-add-button">
               add
             </i>
-            <!-- <input type="button" value="add" /> -->
           </form>
+        </div>
+      </div>
+      <div class="section group">
+        <div class="col span_1_of_5"></div>
+        <div id="completed" class="col span_3_of_5">
+          <h3 id="mainHeader">Look at what you did today!</h3>
+          <ul>
+            <li>test</li>
+          </ul>
         </div>
         <div class="col span_1_of_5"></div>
       </div>
@@ -50,12 +55,17 @@
       Backgrounds provided by the cool people at
       <a href="https://unsplash.com/">Unsplash</a>
     </footer>
-    <script src="./jquery-3.3.1.min.js"></script>
+    <!-- <script src="./jquery-3.3.1.min.js"></script> -->
 
     <script
       language="JavaScript"
       type="text/javascript"
       src="./main.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="./list.js"
     ></script>
   </body>
 </html>

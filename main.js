@@ -1,43 +1,39 @@
-// get background image
+/*-----------------------------------------------------------------
+HANDLE GETTING BACKGROUND IMAGES
+-----------------------------------------------------------------*/
 window.onload = function() {
   document.body.style.backgroundImage =
     // "url(https://source.unsplash.com/random/1600x900/?nature)";
     "url(https://source.unsplash.com/collection/4345819/)";
 };
 
-// handle adding of things to do
-let addItem = document.getElementById("todo-add-button");
+/*-----------------------------------------------------------------
+HANDLE FORM SUBMIT
+-----------------------------------------------------------------*/
+var form = document.getElementById("todo-form");
+function handleForm(event) {
+  event.preventDefault();
+}
+form.addEventListener("submit", handleForm);
 
-addItem.onclick = function() {
-  var text = document.getElementById("todo-item").value; //.value gets input values
-  console.log(text);
-
-  var ul = document.getElementById("list");
-  var li = document.createElement("li");
-  var p = document.createElement("p");
-  p.appendChild(document.createTextNode(text));
-  li.appendChild(p);
-
-  var deleteButton = document.createElement("i");
-  deleteButton.setAttribute("class", "material-icons md-48 md-light");
-  deleteButton.appendChild(document.createTextNode("done"));
-
-  li.appendChild(deleteButton);
-  ul.appendChild(li);
-};
-
-// Listen for the enter key press.
+/*-----------------------------------------------------------------
+handle enter key press
+-----------------------------------------------------------------*/
 document.body.addEventListener("keyup", function(e) {
+  e.preventDefault();
   if (e.keyCode == 13) {
     // Simulate clicking on the submit button.
     addItem.onclick();
   }
 });
 
-// handle getting inspired
-let getInspired = document.getElementById("getInspired");
+/*-----------------------------------------------------------------
+HANDLE INSPIROBOT IMAGES
+-----------------------------------------------------------------*/
 
-getInspired.onclick = function() {
+let getInspiredButton = document.getElementById("getInspired");
+
+getInspiredButton.onclick = function() {
   var botFrame = document.getElementById("inspirobot");
   if (botFrame.style.display !== "block") {
     var xhttp = new XMLHttpRequest();
@@ -51,8 +47,16 @@ getInspired.onclick = function() {
     xhttp.open("GET", "http://inspirobot.me/api?generate=true", true);
     xhttp.send();
     botFrame.style.display = "block";
+    getInspiredButton.replaceChild(
+      document.createTextNode("get back to work!"),
+      getInspiredButton.childNodes[0]
+    );
   } else {
     botFrame.style.display = "none";
     botFrame.src = "";
+    getInspiredButton.replaceChild(
+      document.createTextNode("psst... need another boost?"),
+      getInspiredButton.childNodes[0]
+    );
   }
 };
