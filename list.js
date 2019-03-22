@@ -1,14 +1,29 @@
 /*-----------------------------------------------------------------
 HANDLE CHECKABLES
 -----------------------------------------------------------------*/
-function refreshCheckables() {
-  let checkItems = document.getElementsByClassName("checkItem");
+function refreshCheckables(count) {
+  var check_item = function() {
+    // console.log("Button clicked, id " + this.id + ", text" + this.innerHTML);
+    var completedItem = this.previousSibling.innerHTML;
+    console.log(completedItem);
+    this.setAttribute("class", "completedItem");
+    this.previousSibling.setAttribute("class", "completedItem");
 
-  console.log(checkItems);
-
-  checkItem.onclick = function() {
-    console.log(checkItem.previousSibling.innerHTML);
+    // grab the list
+    var ul = document.getElementById("completedList");
+    // create a new list item
+    var li = document.createElement("li");
+    // create a new paragraph item
+    var p = document.createElement("p");
+    // put the text submitted into that paragraph item
+    p.appendChild(document.createTextNode(completedItem));
+    // put that paragraph item into the list item
+    li.appendChild(p);
+    console.log(li);
+    ul.appendChild(li);
   };
+
+  document.getElementById(count).onclick = check_item;
 }
 
 /*-----------------------------------------------------------------
@@ -31,6 +46,7 @@ function handleCount(count) {
     );
     getInspiredButton.style.display = "block";
     input.setAttribute("placeholder", "Just kidding one more thing...");
+    // count = 0;
   }
 }
 
@@ -61,6 +77,10 @@ addItem.onclick = function() {
 
     // var deleteForm = document.createElement("form");
     var deleteButton = document.createElement("i");
+    // give each p an ID and an onClick reply click thing to send along the id as a parameter when clicked
+    deleteButton.setAttribute("id", count);
+    // deleteButton.setAttribute("onClick", `reply_click(${this.id})`);
+
     deleteButton.setAttribute("cursor", "pointer");
     deleteButton.setAttribute(
       "class",
@@ -72,9 +92,9 @@ addItem.onclick = function() {
     li.appendChild(deleteButton);
     ul.appendChild(li);
 
-    count++;
-
     handleCount(count);
-    // refreshCheckables();
+
+    refreshCheckables(count);
+    count++;
   }
 };

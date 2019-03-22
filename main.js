@@ -1,11 +1,16 @@
 /*-----------------------------------------------------------------
 HANDLE GETTING BACKGROUND IMAGES
 -----------------------------------------------------------------*/
-window.onload = function() {
-  document.body.style.backgroundImage =
-    // "url(https://source.unsplash.com/random/1600x900/?nature)";
-    "url(https://source.unsplash.com/collection/4345819/)";
-};
+// window.onload = function() {
+//   document.body.style.backgroundImage =
+//     // "url(https://source.unsplash.com/random/1600x900/?nature)";
+//     "url(https://source.unsplash.com/collection/4345819/)";
+// };
+
+// window.addEventListener('load', () => {
+//   //window loaded
+//   //do what you want
+// })
 
 /*-----------------------------------------------------------------
 HANDLE FORM SUBMIT
@@ -44,19 +49,31 @@ getInspiredButton.onclick = function() {
       }
     };
     // send data to server
-    xhttp.open("GET", "http://inspirobot.me/api?generate=true", true);
+    xhttp.open("GET", "https://inspirobot.me/api?generate=true", true);
     xhttp.send();
     botFrame.style.display = "block";
-    getInspiredButton.replaceChild(
-      document.createTextNode("get back to work!"),
-      getInspiredButton.childNodes[0]
-    );
+    window.setTimeout(function() {
+      getInspiredButton.replaceChild(
+        document.createTextNode("get back to work!"),
+        getInspiredButton.childNodes[0]
+      );
+    }, 3000);
   } else {
     botFrame.style.display = "none";
     botFrame.src = "";
     getInspiredButton.replaceChild(
-      document.createTextNode("psst... need another boost?"),
+      document.createTextNode("need another boost?"),
       getInspiredButton.childNodes[0]
     );
   }
 };
+
+// fs.readFile('/file.json', (err, data) => {
+//   if (err !== null) {
+//     //handle error
+//     console.log(err)
+//     return
+//   }
+//   //no errors, process data
+//   console.log(data)
+// })
