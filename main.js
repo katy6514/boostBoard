@@ -39,13 +39,15 @@ HANDLE INSPIROBOT IMAGES
 let getInspiredButton = document.getElementById("getInspired");
 
 getInspiredButton.onclick = function() {
-  var botFrame = document.getElementById("inspirobot");
+  var botFrame = document.getElementById("inspirobotContainer");
+  var botImg = document.getElementById("inspirobotImg");
+
   if (botFrame.style.display !== "block") {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         // retrieve data from server
-        botFrame.src = this.responseText;
+        botImg.src = this.responseText;
       }
     };
     // send data to server
@@ -60,7 +62,7 @@ getInspiredButton.onclick = function() {
     }, 3000);
   } else {
     botFrame.style.display = "none";
-    botFrame.src = "";
+    botImg.src = "";
     getInspiredButton.replaceChild(
       document.createTextNode("need another boost?"),
       getInspiredButton.childNodes[0]

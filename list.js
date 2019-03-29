@@ -5,12 +5,16 @@ function refreshCheckables(count) {
   var check_item = function() {
     // console.log("Button clicked, id " + this.id + ", text" + this.innerHTML);
     var completedItem = this.previousSibling.innerHTML;
-    console.log(completedItem);
+    // console.log(completedItem);
     this.setAttribute("class", "completedItem");
     this.previousSibling.setAttribute("class", "completedItem");
 
-    // grab the list
-    var ul = document.getElementById("completedList");
+    var completedDiv = document.getElementById("completed");
+    if (completedDiv.style.display !== "block") {
+      completedDiv.style.display = "block";
+    }
+    // grab the completed list
+    var completedList = document.getElementById("completedList");
     // create a new list item
     var li = document.createElement("li");
     // create a new paragraph item
@@ -19,9 +23,12 @@ function refreshCheckables(count) {
     p.appendChild(document.createTextNode(completedItem));
     // put that paragraph item into the list item
     li.appendChild(p);
-    console.log(li);
-    ul.appendChild(li);
+    // console.log(li);
+    completedList.appendChild(li);
   };
+
+  var d = new Date();
+  console.log(d.getHours());
 
   document.getElementById(count).onclick = check_item;
 }
@@ -98,3 +105,10 @@ addItem.onclick = function() {
     count++;
   }
 };
+
+var inspiringMessages = [
+  "wow!",
+  "look at you",
+  "way to go",
+  "you're a MACHINE"
+];

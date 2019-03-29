@@ -22,7 +22,14 @@
           <h2 id="mainHeader">Priorities:</h2>
           <!-- <div class="loader">Loading...</div> -->
           <button id="getInspired"></button>
-          <img id="inspirobot" />
+          <div id="inspirobotContainer">
+            <img id="inspirobotImg" />
+            <p>
+              inspiring images provided by
+              <a href="https://inspirobot.me/">inspirobot</a>
+            </p>
+          </div>
+
           <ul id="list"></ul>
           <form class="todo-form" id="todo-form" action="#">
             <input
@@ -43,9 +50,7 @@
         <div class="col span_1_of_5"></div>
         <div id="completed" class="col span_3_of_5">
           <h3 id="mainHeader">Look at what you did today!</h3>
-          <ul id="completedList">
-            <li>test</li>
-          </ul>
+          <ol id="completedList"></ol>
         </div>
         <div class="col span_1_of_5"></div>
       </div>
