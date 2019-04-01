@@ -27,6 +27,22 @@ function refreshCheckables(count) {
     completedList.appendChild(li);
   };
 
+  // STORE ALL LIST ITEMS,
+  //  - UNCOMPLETED UNTIL THEY ARE COMPLETED
+  //  - COMPLETED UNTIL MIDNIGHT
+
+  if (typeof Storage !== "undefined") {
+    // Store
+    localStorage.setItem("lastname", "Smith");
+    console.log(localStorage);
+  } else {
+    console.log("no storage");
+  }
+  // Retrieve
+  // document.getElementById("result").innerHTML = localStorage.getItem(
+  //   "lastname"
+  // );
+
   var d = new Date();
   console.log(d.getHours());
 
