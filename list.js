@@ -1,59 +1,54 @@
 /*-----------------------------------------------------------------
-HANDLE CHECKABLES
+HANDLE ADDING ITEM TO ANY LIST
 -----------------------------------------------------------------*/
-function refreshCheckables(count) {
-  var check_item = function() {
-    // console.log("Button clicked, id " + this.id + ", text" + this.innerHTML);
-    var completedItem = this.previousSibling.innerHTML;
-    // console.log(completedItem);
-    this.setAttribute("class", "completedItem");
-    this.previousSibling.setAttribute("class", "completedItem");
+function addItemToList(text, listname, toDoItem) {
+  var ul = document.getElementById(listname);
+  var li = document.createElement("li");
+  var p = document.createElement("p");
+  p.appendChild(document.createTextNode(text));
+  li.appendChild(p);
+  ul.appendChild(li);
 
-    var completedDiv = document.getElementById("completed");
-    if (completedDiv.style.display !== "block") {
-      completedDiv.style.display = "block";
-    }
-    // grab the completed list
-    var completedList = document.getElementById("completedList");
-    // create a new list item
-    var li = document.createElement("li");
-    // create a new paragraph item
-    var p = document.createElement("p");
-    // put the text submitted into that paragraph item
-    p.appendChild(document.createTextNode(completedItem));
-    // put that paragraph item into the list item
-    li.appendChild(p);
-    // console.log(li);
-    completedList.appendChild(li);
-  };
-
-  // STORE ALL LIST ITEMS,
-  //  - UNCOMPLETED UNTIL THEY ARE COMPLETED
-  //  - COMPLETED UNTIL MIDNIGHT
-
-  if (typeof Storage !== "undefined") {
-    // Store
-    localStorage.setItem("lastname", "Smith");
-    console.log(localStorage);
-  } else {
-    console.log("no storage");
+  if (toDoItem) {
+    // create checkmark button and append to newly created ToDo item
+    var checkButton = document.createElement("i");
+    checkButton.setAttribute("id", count);
+    checkButton.setAttribute("cursor", "pointer");
+    checkButton.setAttribute(
+      "class",
+      "material-icons md-48 md-light checkItem"
+    );
+    checkButton.appendChild(document.createTextNode("done"));
+    li.appendChild(checkButton);
   }
-  // Retrieve
-  // document.getElementById("result").innerHTML = localStorage.getItem(
-  //   "lastname"
-  // );
-
-  var d = new Date();
-  console.log(d.getHours());
-
-  document.getElementById(count).onclick = check_item;
 }
 
 /*-----------------------------------------------------------------
-HANDLE COUNT
+HANDLE CHECKABLES
 -----------------------------------------------------------------*/
+function handleCompletedItems(count) {
+  var completedCount = 0;
+  var checkItem = function() {
+    let completedSection = document.getElementById("completed");
+    completedSection.style.display = "block";
 
-function handleCount(count) {
+    var completedItem = this.previousSibling.innerHTML;
+    console.log(completedItem);
+    this.setAttribute("class", "completedItem");
+    this.previousSibling.setAttribute("class", "completedItem");
+
+    addItemToList(completedItem, "completedList");
+    completedCount++;
+    console.log(completedCount);
+  };
+
+  document.getElementById(count).onclick = checkItem;
+}
+
+/*-----------------------------------------------------------------
+  HANDLE COUNT
+  -----------------------------------------------------------------*/
+function refreshPlaceholderText(count) {
   let list = document.getElementById("list");
   var input = document.getElementById("todo-item");
   let getInspiredButton = document.getElementById("getInspired");
@@ -69,62 +64,29 @@ function handleCount(count) {
     );
     getInspiredButton.style.display = "block";
     input.setAttribute("placeholder", "Just kidding one more thing...");
-    // count = 0;
   }
 }
 
 /*-----------------------------------------------------------------
-HANDLE TO DO LIST
------------------------------------------------------------------*/
-let addItem = document.getElementById("todo-add-button");
+  HANDLE TO DO LIST
+  -----------------------------------------------------------------*/
+let addButton = document.getElementById("todo-add-button");
 
 let count = 0;
 
-addItem.onclick = function() {
+addButton.onclick = function() {
   var text = document.getElementById("todo-item").value;
   if (text !== "") {
-    // console.log(text);
+    // create ToDo item and add to ToDo list
 
-    // grab the list
-    var ul = document.getElementById("list");
-    // create a new list item
-    var li = document.createElement("li");
-    // create a new paragraph item
-    var p = document.createElement("p");
-    // put the text submitted into that paragraph item
-    p.appendChild(document.createTextNode(text));
-    // put that paragraph item into the list item
-    li.appendChild(p);
+    addItemToList(text, "list", true);
+
     // reset the text in the input to nothing
     document.getElementById("todo-item").value = "";
 
-    // var deleteForm = document.createElement("form");
-    var deleteButton = document.createElement("i");
-    // give each p an ID and an onClick reply click thing to send along the id as a parameter when clicked
-    deleteButton.setAttribute("id", count);
-    // deleteButton.setAttribute("onClick", `reply_click(${this.id})`);
+    refreshPlaceholderText(count);
 
-    deleteButton.setAttribute("cursor", "pointer");
-    deleteButton.setAttribute(
-      "class",
-      "material-icons md-48 md-light checkItem"
-    );
-    deleteButton.appendChild(document.createTextNode("done"));
-    // deleteForm.appendChild(deleteButton);
-
-    li.appendChild(deleteButton);
-    ul.appendChild(li);
-
-    handleCount(count);
-
-    refreshCheckables(count);
+    handleCompletedItems(count);
     count++;
   }
 };
-
-var inspiringMessages = [
-  "wow!",
-  "look at you",
-  "way to go",
-  "you're a MACHINE"
-];

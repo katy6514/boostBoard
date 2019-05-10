@@ -1,16 +1,12 @@
 /*-----------------------------------------------------------------
 HANDLE GETTING BACKGROUND IMAGES
 -----------------------------------------------------------------*/
-// window.onload = function() {
-//   document.body.style.backgroundImage =
-//     // "url(https://source.unsplash.com/random/1600x900/?nature)";
-//     "url(https://source.unsplash.com/collection/4345819/)";
-// };
-
-// window.addEventListener('load', () => {
-//   //window loaded
-//   //do what you want
-// })
+window.onload = function() {
+  document.body.style.backgroundImage =
+    // "url(https://source.unsplash.com/random/1600x900/?nature)";
+    "url(https://source.unsplash.com/collection/4345819/)";
+  localStorage.clear();
+};
 
 /*-----------------------------------------------------------------
 HANDLE FORM SUBMIT
@@ -28,7 +24,7 @@ document.body.addEventListener("keyup", function(e) {
   e.preventDefault();
   if (e.keyCode == 13) {
     // Simulate clicking on the submit button.
-    addItem.onclick();
+    addButton.onclick();
   }
 });
 
