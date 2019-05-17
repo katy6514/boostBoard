@@ -24,7 +24,7 @@ function addItemToList(text, listname, toDoItem) {
 }
 
 /*-----------------------------------------------------------------
-HANDLE CHECKABLES
+HANDLE CHECKING OF ITEMS
 -----------------------------------------------------------------*/
 function handleCompletedItems(count) {
   var completedCount = 0;
@@ -34,8 +34,9 @@ function handleCompletedItems(count) {
 
     var completedItem = this.previousSibling.innerHTML;
     console.log(completedItem);
-    this.setAttribute("class", "completedItem");
-    this.previousSibling.setAttribute("class", "completedItem");
+    // this.setAttribute("class", "completedItem");
+    // this.previousSibling.setAttribute("class", "completedItem");
+    this.parentElement.remove();
 
     addItemToList(completedItem, "completedList");
     completedCount++;
