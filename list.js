@@ -28,6 +28,7 @@ function addItemToList(text, listname, toDoItem) {
     // create checkmark button and append to newly created ToDo item
     var checkButton = document.createElement("i");
     checkButton.setAttribute("id", `toDo${count}`);
+    // checkButton.setAttribute("id", count);
     checkButton.setAttribute("cursor", "pointer");
     checkButton.setAttribute(
       "class",
@@ -48,16 +49,18 @@ function handleCompletedItems() {
     completedSection.style.display = "block";
 
     var completedItem = this.previousSibling.innerHTML;
-    console.log(completedItem);
+    // console.log(completedItem);
     this.parentElement.remove();
 
     addItemToList(completedItem, "completedList");
+    localStorage.removeItem(`toDo${count}`);
+    console.log(localStorage);
     completedCount += 1;
     count -= 1;
-    console.log(completedCount, count);
+    // console.log(completedCount, count);
   };
 
-  document.getElementById(count).onclick = checkItem;
+  document.getElementById(`toDo${count}`).onclick = checkItem;
 }
 
 /*-----------------------------------------------------------------
@@ -117,6 +120,9 @@ addButton.onclick = function() {
   }
 };
 
+/*-----------------------------------------------------------------
+  HAL QUOTES FOR BOOSTING
+  -----------------------------------------------------------------*/
 const HALquotes = {
   1: "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal. I've still got the greatest enthusiasm and confidence in the mission. And I want to help you.",
   2: "This mission is too important for me to allow you to jeopardize it.",
