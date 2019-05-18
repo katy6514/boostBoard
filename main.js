@@ -5,7 +5,8 @@ window.onload = function() {
   document.body.style.backgroundImage =
     // "url(https://source.unsplash.com/random/1600x900/?nature)";
     "url(https://source.unsplash.com/collection/4345819/)";
-  localStorage.clear();
+  // localStorage.clear();
+  console.log(localStorage);
 };
 
 /*-----------------------------------------------------------------
@@ -18,7 +19,7 @@ function handleForm(event) {
 form.addEventListener("submit", handleForm);
 
 /*-----------------------------------------------------------------
-handle enter key press
+HANDLE ENTER KEY PRESS
 -----------------------------------------------------------------*/
 document.body.addEventListener("keyup", function(e) {
   e.preventDefault();
