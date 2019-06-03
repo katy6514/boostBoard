@@ -7,6 +7,13 @@ window.onload = function() {
     "url(https://source.unsplash.com/collection/4345819/)";
   // localStorage.clear();
   console.log(localStorage);
+  // for (const [number, text] of localStorage) {
+  //   addItemToList(text, "list", true);
+  // }
+  // for (var i = 0; i < localStorage.length; i++) {
+  //   // $('body').append(localStorage.getItem(localStorage.key(i)));
+  //   addItemToList(localStorage.getItem(localStorage.key(i)), "list", true);
+  // }
 };
 
 /*-----------------------------------------------------------------

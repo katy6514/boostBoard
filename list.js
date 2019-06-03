@@ -69,7 +69,6 @@ function handleCompletedItems() {
 function refreshPlaceholderText() {
   let list = document.getElementById("list");
   var input = document.getElementById("todo-item");
-  // let getInspiredButton = document.getElementById("getInspired");
   console.log(count);
   if (count <= 1) {
     list.style.display = "block";
@@ -77,10 +76,6 @@ function refreshPlaceholderText() {
   } else if (count <= 2) {
     input.setAttribute("placeholder", "And do one more thing...");
   } else if (count <= 3) {
-    // getInspiredButton.appendChild(
-    //   document.createTextNode("psst... need a boost?")
-    // );
-    // getInspiredButton.style.display = "block";
     input.setAttribute("placeholder", "Just kidding one more thing...");
   } else if (count <= 4) {
     input.setAttribute("placeholder", "Keep going!");
