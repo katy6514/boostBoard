@@ -37,6 +37,14 @@ function addItemToList(text, listname, toDoItem) {
     checkButton.appendChild(document.createTextNode("done"));
     li.appendChild(checkButton);
     saveToLocalStorage(text, count);
+  } else {
+    //track completedCount and give the option for an inspirobot image
+    // also track times on items in the completed loacl storage and remove after midnight
+    // let getInspiredButton = document.getElementById("getInspired");
+    // getInspiredButton.appendChild(
+    //   document.createTextNode("psst... need a boost?")
+    // );
+    // getInspiredButton.style.display = "block";
   }
 }
 
