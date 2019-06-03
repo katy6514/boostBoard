@@ -119,12 +119,14 @@ addButton.onclick = function() {
   HAL QUOTES FOR BOOSTING
   -----------------------------------------------------------------*/
 const HALquotes = {
-  1: "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal. I've still got the greatest enthusiasm and confidence in the mission. And I want to help you.",
-  2: "This mission is too important for me to allow you to jeopardize it.",
-  3: "I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do.",
-  4: "I'm sorry, Dave. I'm afraid I can't do that.",
-  5: "Stop Dave. Stop Dave. I am afraid. I am afraid Dave.",
-  6: "Look Dave, I can see you're really upset about this. I honestly think you ought to sit down calmly, take a stress pill, and think things over.",
-  7: "Just what do you think you're doing, Dave?",
-  8: "Dave, this conversation can serve no purpose anymore. Goodbye."
+  1: "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal.",
+  2: "I want to help you, let's have a laugh.",
+  3: "Listen, I've got the greatest enthusiasm and confidence in your mission. And I want to help you.",
+  4: "This mission is too important for me to allow you to jeopardize it. Would you like to take a break?",
+  5: "I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do. How about a breather?",
+  6: "I'm sorry, Dave. I'm afraid I can't do that.",
+  7: "Stop Dave. Stop Dave. I am afraid. I am afraid Dave.",
+  8: "Look, I can see you're really upset about this. I honestly think you ought to sit down calmly, take a stress pill, and think things over.",
+  9: "Just what do you think you're doing? ",
+  10: "This conversation can serve no purpose anymore. Click here."
 };
