@@ -9,7 +9,7 @@ function saveToLocalStorage(text, count) {
   //   timestamp:,
   //   content:,
   // }
-  localStorage.setItem(text);
+  localStorage.setItem(`todo${count}`, text);
   console.log(localStorage);
 }
 
