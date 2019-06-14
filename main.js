@@ -6,14 +6,14 @@ window.onload = function() {
     // "url(https://source.unsplash.com/random/1600x900/?nature)";
     "url(https://source.unsplash.com/collection/4345819/)";
   // localStorage.clear();
-  console.log(localStorage);
-  // for (const [number, text] of localStorage) {
-  //   addItemToList(text, "list", true);
-  // }
-  // for (var i = 0; i < localStorage.length; i++) {
-  //   // $('body').append(localStorage.getItem(localStorage.key(i)));
-  //   addItemToList(localStorage.getItem(localStorage.key(i)), "list", true);
-  // }
+  const items = { ...localStorage };
+
+  const entries = Object.entries(items);
+
+  for (const [toDoNumber, text] of entries) {
+    const number = parseInt(toDoNumber.slice(4));
+    addItemToList(text, "list", true);
+  }
 };
 
 /*-----------------------------------------------------------------
