@@ -28,9 +28,9 @@ const loadItems = () => {
 HANDLE FORM SUBMIT
 -----------------------------------------------------------------*/
 var form = document.getElementById("todo-form");
-function handleForm(event) {
+const handleForm = event => {
   event.preventDefault();
-}
+};
 form.addEventListener("submit", handleForm);
 
 /*-----------------------------------------------------------------

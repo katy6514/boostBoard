@@ -4,19 +4,19 @@ let completedCount = 0;
 /*-----------------------------------------------------------------
 HANDLE SAVING TO LOCAL STORAGE
 -----------------------------------------------------------------*/
-function saveToLocalStorage(text, count) {
   // item: {
   //   timestamp:,
   //   content:,
   // }
-  localStorage.setItem(`todo${count}`, text);
   console.log(localStorage);
-}
+const saveToLocalStorage = (text, count) => {
+  localStorage.setItem(count, text);
+};
 
 /*-----------------------------------------------------------------
 HANDLE ADDING ITEM TO ANY LIST
 -----------------------------------------------------------------*/
-function addItemToList(text, listname, toDoItem) {
+const addItemToList = (text, listname, toDoItem) => {
   var ul = document.getElementById(listname);
   var li = document.createElement("li");
   var p = document.createElement("p");
@@ -46,12 +46,12 @@ function addItemToList(text, listname, toDoItem) {
     // );
     // getInspiredButton.style.display = "block";
   }
-}
+};
 
 /*-----------------------------------------------------------------
 HANDLE CHECKING OF ITEMS
 -----------------------------------------------------------------*/
-function handleCompletedItems() {
+const handleCompletedItems = () => {
   var checkItem = function() {
     let completedSection = document.getElementById("completed");
     completedSection.style.display = "block";
@@ -69,15 +69,15 @@ function handleCompletedItems() {
   };
 
   document.getElementById(`toDo${count}`).onclick = checkItem;
-}
+};
 
 /*-----------------------------------------------------------------
   HANDLE COUNT
   -----------------------------------------------------------------*/
-function refreshPlaceholderText() {
+const refreshPlaceholderText = () => {
   let list = document.getElementById("list");
   var input = document.getElementById("todo-item");
-  console.log(count);
+  console.log("count", count);
   if (count <= 1) {
     list.style.display = "block";
     input.setAttribute("placeholder", "Also do this other thing...");
@@ -99,7 +99,7 @@ function refreshPlaceholderText() {
       "Whatever I'm not even counting anymore..."
     );
   }
-}
+};
 
 /*-----------------------------------------------------------------
   HANDLE TO DO LIST
