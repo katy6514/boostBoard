@@ -5,6 +5,14 @@ window.onload = function() {
   document.body.style.backgroundImage =
     // "url(https://source.unsplash.com/random/1600x900/?nature)";
     "url(https://source.unsplash.com/collection/4345819/)";
+  loadItems();
+};
+
+/*-----------------------------------------------------------------
+LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
+-----------------------------------------------------------------*/
+
+const loadItems = () => {
   // localStorage.clear();
   const items = { ...localStorage };
 
@@ -12,7 +20,7 @@ window.onload = function() {
 
   for (const [toDoNumber, text] of entries) {
     const number = parseInt(toDoNumber.slice(4));
-    addItemToList(text, "list", true);
+    createListItem(text);
   }
 };
 
