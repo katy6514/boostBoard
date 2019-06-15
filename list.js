@@ -51,8 +51,8 @@ const handleCompletedItems = () => {
     let completedSection = document.getElementById("completed");
     completedSection.style.display = "block";
 
-    var completedItem = this.previousSibling.innerHTML;
-    // console.log(completedItem);
+    const completedItem = this.previousSibling.innerHTML;
+    const completedItemID = this.id;
     this.parentElement.remove();
 
     addItemToList(completedItem, "completedList");
@@ -62,7 +62,9 @@ const handleCompletedItems = () => {
     count -= 1;
     // console.log(completedCount, count);
   };
+    addItemToList(completedItem, "completedList", false);
 
+    localStorage.removeItem(completedItemID);
   document.getElementById(`toDo${count}`).onclick = checkItem;
 };
 
