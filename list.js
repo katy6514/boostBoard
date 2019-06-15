@@ -31,7 +31,7 @@ const addItemToList = (text, listname, toDoItem) => {
     );
     checkButton.appendChild(document.createTextNode("done"));
     li.appendChild(checkButton);
-    saveToLocalStorage(text, count);
+    saveToLocalStorage(text, `toDo${count}`);
   } else {
     //track completedCount and give the option for an inspirobot image
     // also track times on items in the completed loacl storage and remove after midnight
