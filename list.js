@@ -4,11 +4,6 @@ let completedCount = 0;
 /*-----------------------------------------------------------------
 HANDLE SAVING TO LOCAL STORAGE
 -----------------------------------------------------------------*/
-  // item: {
-  //   timestamp:,
-  //   content:,
-  // }
-  console.log(localStorage);
 const saveToLocalStorage = (text, count) => {
   localStorage.setItem(count, text);
 };
