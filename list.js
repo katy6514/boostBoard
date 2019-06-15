@@ -1,4 +1,4 @@
-let count = 1;
+let count = 0;
 let completedCount = 0;
 
 /*-----------------------------------------------------------------
@@ -23,7 +23,6 @@ const addItemToList = (text, listname, toDoItem) => {
     // create checkmark button and append to newly created ToDo item
     var checkButton = document.createElement("i");
     checkButton.setAttribute("id", `toDo${count}`);
-    // checkButton.setAttribute("id", count);
     checkButton.setAttribute("cursor", "pointer");
     checkButton.setAttribute(
       "class",
@@ -54,17 +53,12 @@ const handleCompletedItems = () => {
     const completedItem = this.previousSibling.innerHTML;
     const completedItemID = this.id;
     this.parentElement.remove();
+    count--;
 
-    addItemToList(completedItem, "completedList");
-    localStorage.removeItem(`toDo${count}`);
-    console.log(localStorage);
-    completedCount += 1;
-    count -= 1;
-    // console.log(completedCount, count);
-  };
     addItemToList(completedItem, "completedList", false);
 
     localStorage.removeItem(completedItemID);
+  };
   document.getElementById(`toDo${count}`).onclick = checkItem;
 };
 
@@ -74,7 +68,6 @@ const handleCompletedItems = () => {
 const refreshPlaceholderText = () => {
   let list = document.getElementById("list");
   var input = document.getElementById("todo-item");
-  console.log("count", count);
   if (count <= 1) {
     list.style.display = "block";
     input.setAttribute("placeholder", "Also do this other thing...");
@@ -99,6 +92,22 @@ const refreshPlaceholderText = () => {
 };
 
 /*-----------------------------------------------------------------
+  CREATE TO DO LIST ITEM
+  -----------------------------------------------------------------*/
+
+const createListItem = text => {
+  addItemToList(text, "list", true);
+
+  // reset the text in the input to nothing
+  document.getElementById("todo-item").value = "";
+
+  refreshPlaceholderText();
+
+  handleCompletedItems();
+  count++;
+};
+
+/*-----------------------------------------------------------------
   HANDLE TO DO LIST
   -----------------------------------------------------------------*/
 let addButton = document.getElementById("todo-add-button");
@@ -107,16 +116,7 @@ addButton.onclick = function() {
   var text = document.getElementById("todo-item").value;
   if (text !== "") {
     // create ToDo item and add to ToDo list
-
-    addItemToList(text, "list", true);
-
-    // reset the text in the input to nothing
-    document.getElementById("todo-item").value = "";
-
-    refreshPlaceholderText();
-
-    handleCompletedItems();
-    count++;
+    createListItem(text);
   }
 };
 
