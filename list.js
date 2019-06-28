@@ -14,7 +14,7 @@ const createListItem = (text, timestamp = undefined) => {
 
   refreshPlaceholderText();
 
-  handleCompletedItems();
+  enableCheckMarks();
 };
 
 /*-----------------------------------------------------------------
@@ -79,29 +79,27 @@ const saveToLocalStorage = (text, timestamp) => {
 /*-----------------------------------------------------------------
 HANDLE CHECKING OF ITEMS
 -----------------------------------------------------------------*/
-const handleCompletedItems = () => {
-  var checkItem = function() {
-    // const myFunction = (timestamp)=>{
-    let completedSection = document.getElementById("completed");
-    completedSection.style.display = "block";
+const enableCheckMarks = () => {
+  let checkMark = document.getElementById(`toDo${count}`);
+  checkMark.onclick = function() {
+    // find and show the "toDone" portion of the page
+    let completedDiv = document.getElementById("completed");
+    completedDiv.style.display = "block";
 
+    // get the list item and it's timestamp ID
     const completedItem = this.previousSibling.innerHTML;
     const completedItemID = this.previousSibling.parentNode.id;
 
+    // remove the list item from the "toDo" list
     this.parentElement.remove();
     count--;
 
+    // add the list item to the "toDone" list
     addItemToList(completedItem, undefined, "completedList");
 
-    // FIX: items are now stored by timesstamp in localstorage, but
-    // completedItemID = toDo#, find a different way to find the
-    // clicked-on element's contents
-    localStorage.removeItem(completedItemID); // this removes from UI but not localStorage
-    // https://stackoverflow.com/questions/3623110/get-an-elements-id
+    localStorage.removeItem(completedItemID);
     console.log("localStorage", localStorage);
   };
-
-  document.getElementById(`toDo${count}`).onclick = checkItem;
 };
 
 /*-----------------------------------------------------------------
