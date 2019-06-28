@@ -62,7 +62,7 @@ addButton.onclick = function() {
 HANDLE INSPIROBOT IMAGES
 -----------------------------------------------------------------*/
 
-let getInspiredButton = document.getElementById("getInspired");
+let getInspiredButton = document.getElementById("getInspiredButton");
 
 getInspiredButton.onclick = function() {
   var botFrame = document.getElementById("inspirobotContainer");

@@ -53,14 +53,19 @@ h3 {
   min-height: 400px;
 }
 
-button#getInspired {
-  background: none; /* This removes the default background */
-  color: cyan;
+button {
+  background: none;
   border: none;
+}
+
+button#getInspiredButton {
   font-size: 12px;
   cursor: pointer;
-  display: none;
   margin: auto;
+}
+
+#getInspiredRow {
+  display: none;
 }
 
 #inspirobotImg {

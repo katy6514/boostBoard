@@ -62,11 +62,19 @@ const addItemToList = (text, timestamp, listname) => {
       // console.log("completedItem");
       //track completedCount and give the option for an inspirobot image
       // also track times on items in the completed loacl storage and remove after midnight
-      // let getInspiredButton = document.getElementById("getInspired");
-      // getInspiredButton.appendChild(
-      //   document.createTextNode("psst... need a boost?")
-      // );
-      // getInspiredButton.style.display = "block";
+      let getInspiredButtonID = document.getElementById("getInspiredButton");
+      let getInspiredButtonRow = document.getElementById("getInspiredRow");
+
+      if (completedCount === 3) {
+        getInspiredButtonID.appendChild(
+          document.createTextNode("psst... need a boost?")
+        );
+        // getInspiredButtonID.style.display = "block";
+        getInspiredButtonRow.style.display = "block";
+      } else {
+        // getInspiredButtonID.style.display = "none";
+        getInspiredButtonRow.style.display = "none";
+      }
       break;
     default:
       console.log("you did something wrong");
