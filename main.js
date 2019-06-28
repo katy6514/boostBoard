@@ -11,16 +11,17 @@ window.onload = function() {
 /*-----------------------------------------------------------------
 LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 -----------------------------------------------------------------*/
-
 const loadItems = () => {
   // localStorage.clear();
   const items = { ...localStorage };
+  console.log(items);
 
   const entries = Object.entries(items);
 
-  for (const [toDoNumber, text] of entries) {
-    const number = parseInt(toDoNumber.slice(4));
-    createListItem(text);
+  for (const [timestamp, text] of entries) {
+    console.log(timestamp, text);
+    // const number = parseInt(toDoNumber.slice(4));
+    createListItem(text, timestamp);
   }
 };
 
@@ -43,6 +44,19 @@ document.body.addEventListener("keyup", function(e) {
     addButton.onclick();
   }
 });
+
+/*-----------------------------------------------------------------
+  HANDLE ADD BUTTON CLICK
+  -----------------------------------------------------------------*/
+let addButton = document.getElementById("todo-add-button");
+
+addButton.onclick = function() {
+  var text = document.getElementById("todo-item").value;
+  if (text !== "") {
+    // create ToDo item and add to ToDo list
+    createListItem(text);
+  }
+};
 
 /*-----------------------------------------------------------------
 HANDLE INSPIROBOT IMAGES

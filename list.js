@@ -2,16 +2,25 @@ let count = 0;
 let completedCount = 0;
 
 /*-----------------------------------------------------------------
-HANDLE SAVING TO LOCAL STORAGE
------------------------------------------------------------------*/
-const saveToLocalStorage = (text, count) => {
-  localStorage.setItem(count, text);
+  CREATE TO DO LIST ITEM
+  -----------------------------------------------------------------*/
+
+const createListItem = (text, timestamp = undefined) => {
+  // console.log("IN CREATE LIST ITEM", text, timestamp);
+  addItemToList(text, timestamp, "list");
+
+  // reset the text in the input to nothing
+  document.getElementById("todo-item").value = "";
+
+  refreshPlaceholderText();
+
+  handleCompletedItems();
 };
 
 /*-----------------------------------------------------------------
 HANDLE ADDING ITEM TO ANY LIST
 -----------------------------------------------------------------*/
-const addItemToList = (text, listname, toDoItem) => {
+const addItemToList = (text, timestamp, listname) => {
   var ul = document.getElementById(listname);
   var li = document.createElement("li");
   var p = document.createElement("p");
@@ -19,51 +28,81 @@ const addItemToList = (text, listname, toDoItem) => {
   li.appendChild(p);
   ul.appendChild(li);
 
-  if (toDoItem) {
-    // create checkmark button and append to newly created ToDo item
-    var checkButton = document.createElement("i");
-    checkButton.setAttribute("id", `toDo${count}`);
-    checkButton.setAttribute("cursor", "pointer");
-    checkButton.setAttribute(
-      "class",
-      "material-icons md-48 md-light checkItem"
-    );
-    checkButton.appendChild(document.createTextNode("done"));
-    li.appendChild(checkButton);
-    saveToLocalStorage(text, `toDo${count}`);
-  } else {
-    //track completedCount and give the option for an inspirobot image
-    // also track times on items in the completed loacl storage and remove after midnight
-    // let getInspiredButton = document.getElementById("getInspired");
-    // getInspiredButton.appendChild(
-    //   document.createTextNode("psst... need a boost?")
-    // );
-    // getInspiredButton.style.display = "block";
+  switch (listname) {
+    case "list":
+      count++;
+      let newTimestamp = new Date().getTime();
+
+      // create checkmark button and append to newly created ToDo item
+      var checkButton = document.createElement("i");
+      checkButton.setAttribute("id", `toDo${count}`);
+      checkButton.setAttribute("class", timestamp || newTimestamp);
+      checkButton.setAttribute("cursor", "pointer");
+      checkButton.setAttribute(
+        "class",
+        "material-icons md-48 md-light checkItem"
+      );
+      checkButton.appendChild(document.createTextNode("done"));
+      li.appendChild(checkButton);
+      saveToLocalStorage(text, timestamp || newTimestamp);
+      break;
+    case "completedList":
+      // console.log("completedItem");
+      //track completedCount and give the option for an inspirobot image
+      // also track times on items in the completed loacl storage and remove after midnight
+      // let getInspiredButton = document.getElementById("getInspired");
+      // getInspiredButton.appendChild(
+      //   document.createTextNode("psst... need a boost?")
+      // );
+      // getInspiredButton.style.display = "block";
+      break;
+    default:
+      console.log("you did something wrong");
   }
+};
+
+/*-----------------------------------------------------------------
+HANDLE SAVING TO LOCAL STORAGE
+-----------------------------------------------------------------*/
+const saveToLocalStorage = (text, timestamp) => {
+  // let date = ;
+  // console.log(timestamp);
+  localStorage.setItem(timestamp, text);
+  // console.log(localStorage);
 };
 
 /*-----------------------------------------------------------------
 HANDLE CHECKING OF ITEMS
 -----------------------------------------------------------------*/
 const handleCompletedItems = () => {
-  var checkItem = function() {
+  var checkItem = function(timestamp) {
+    // const myFunction = (timestamp)=>{
     let completedSection = document.getElementById("completed");
     completedSection.style.display = "block";
 
     const completedItem = this.previousSibling.innerHTML;
+    console.log(completedItem);
     const completedItemID = this.id;
+    console.log(completedItemID);
+
     this.parentElement.remove();
     count--;
 
-    addItemToList(completedItem, "completedList", false);
+    addItemToList(completedItem, undefined, "completedList");
 
-    localStorage.removeItem(completedItemID);
+    // FIX: items are now stored by timesstamp in localstorage, but
+    // completedItemID = toDo#, find a different way to find the
+    // clicked-on element's contents
+    localStorage.removeItem(completedItemID); // this removes from UI but not localStorage
+    // https://stackoverflow.com/questions/3623110/get-an-elements-id
+    console.log(localStorage);
   };
+
   document.getElementById(`toDo${count}`).onclick = checkItem;
 };
 
 /*-----------------------------------------------------------------
-  HANDLE COUNT
+  GENERATE PLACEHOLDER TEXT
   -----------------------------------------------------------------*/
 const refreshPlaceholderText = () => {
   let list = document.getElementById("list");
@@ -88,35 +127,6 @@ const refreshPlaceholderText = () => {
       "placeholder",
       "Whatever I'm not even counting anymore..."
     );
-  }
-};
-
-/*-----------------------------------------------------------------
-  CREATE TO DO LIST ITEM
-  -----------------------------------------------------------------*/
-
-const createListItem = text => {
-  addItemToList(text, "list", true);
-
-  // reset the text in the input to nothing
-  document.getElementById("todo-item").value = "";
-
-  refreshPlaceholderText();
-
-  handleCompletedItems();
-  count++;
-};
-
-/*-----------------------------------------------------------------
-  HANDLE TO DO LIST
-  -----------------------------------------------------------------*/
-let addButton = document.getElementById("todo-add-button");
-
-addButton.onclick = function() {
-  var text = document.getElementById("todo-item").value;
-  if (text !== "") {
-    // create ToDo item and add to ToDo list
-    createListItem(text);
   }
 };
 
