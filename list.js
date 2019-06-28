@@ -21,8 +21,13 @@ const createListItem = (text, timestamp = undefined) => {
 HANDLE ADDING ITEM TO ANY LIST
 -----------------------------------------------------------------*/
 const addItemToList = (text, timestamp, listname) => {
+  let newTimestamp = new Date().getTime();
+
   var ul = document.getElementById(listname);
   var li = document.createElement("li");
+  li.setAttribute("id", timestamp || newTimestamp);
+  li.setAttribute("class", "toDoItem");
+
   var p = document.createElement("p");
   p.appendChild(document.createTextNode(text));
   li.appendChild(p);
@@ -31,12 +36,12 @@ const addItemToList = (text, timestamp, listname) => {
   switch (listname) {
     case "list":
       count++;
-      let newTimestamp = new Date().getTime();
 
       // create checkmark button and append to newly created ToDo item
       var checkButton = document.createElement("i");
       checkButton.setAttribute("id", `toDo${count}`);
-      checkButton.setAttribute("class", timestamp || newTimestamp);
+      // checkButton.setAttribute("name", `toDo${count}`);
+      checkButton.setAttribute("class", "toDoCheckMark");
       checkButton.setAttribute("cursor", "pointer");
       checkButton.setAttribute(
         "class",
@@ -75,15 +80,13 @@ const saveToLocalStorage = (text, timestamp) => {
 HANDLE CHECKING OF ITEMS
 -----------------------------------------------------------------*/
 const handleCompletedItems = () => {
-  var checkItem = function(timestamp) {
+  var checkItem = function() {
     // const myFunction = (timestamp)=>{
     let completedSection = document.getElementById("completed");
     completedSection.style.display = "block";
 
     const completedItem = this.previousSibling.innerHTML;
-    console.log(completedItem);
-    const completedItemID = this.id;
-    console.log(completedItemID);
+    const completedItemID = this.previousSibling.parentNode.id;
 
     this.parentElement.remove();
     count--;
@@ -95,7 +98,7 @@ const handleCompletedItems = () => {
     // clicked-on element's contents
     localStorage.removeItem(completedItemID); // this removes from UI but not localStorage
     // https://stackoverflow.com/questions/3623110/get-an-elements-id
-    console.log(localStorage);
+    console.log("localStorage", localStorage);
   };
 
   document.getElementById(`toDo${count}`).onclick = checkItem;
