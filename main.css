@@ -137,13 +137,13 @@ ol {
 ul {
   list-style-type: none;
 }
-#list li {
+#toDoList li {
   border-bottom: 1px solid white;
   padding: 5px 10px 5px 0px;
   display: flex;
 }
 
-#list li p {
+#toDoList li p {
   flex-grow: 1;
   margin: auto;
   word-wrap: break-word;
@@ -151,7 +151,7 @@ ul {
   /* display: inline-block; */
 }
 
-#list li i {
+#toDoList li i {
   flex-grow: 0;
   margin: auto;
   /* vertical-align: bottom; */
