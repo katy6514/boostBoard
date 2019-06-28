@@ -14,12 +14,11 @@ LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 const loadItems = () => {
   // localStorage.clear();
   const items = { ...localStorage };
-  console.log(items);
+  console.log("localStorage on load:", items);
 
   const entries = Object.entries(items);
 
   for (const [timestamp, text] of entries) {
-    console.log(timestamp, text);
     // const number = parseInt(toDoNumber.slice(4));
     createListItem(text, timestamp);
   }
