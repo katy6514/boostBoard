@@ -6,15 +6,22 @@ let completedCount = 0;
   -----------------------------------------------------------------*/
 
 const createListItem = (text, timestamp = undefined) => {
-  // console.log("IN CREATE LIST ITEM", text, timestamp);
-  addItemToList(text, timestamp, "toDoList");
+  // console.log("text", text);
+  // console.log("timestamp", timestamp);
+
+  if (timestamp && timestamp.split("-")[1] === "completed") {
+    addItemToList(text, timestamp.split("-")[0], "toDoneList");
+    // completedCount++;
+  } else {
+    console.log("timestamp", timestamp);
+    addItemToList(text, timestamp, "toDoList");
+    enableCheckingOfMarks();
+  }
 
   // reset the text in the input to nothing
   document.getElementById("todo-item").value = "";
 
   refreshPlaceholderText();
-
-  enableCheckMarks();
 };
 
 /*-----------------------------------------------------------------
@@ -46,7 +53,6 @@ const addItemToList = (text, timestamp, listname) => {
       count++;
       var checkMark = document.createElement("i");
       checkMark.setAttribute("id", `toDo${count}`);
-      // checkButton.setAttribute("class", "toDoCheckMark");
       checkMark.setAttribute("cursor", "pointer");
       checkMark.setAttribute(
         "class",
@@ -59,21 +65,21 @@ const addItemToList = (text, timestamp, listname) => {
     case "toDoneList":
       count--;
       completedCount++;
-      // console.log("completedItem");
-      //track completedCount and give the option for an inspirobot image
-      // also track times on items in the completed loacl storage and remove after midnight
-      let getInspiredButtonID = document.getElementById("getInspiredButton");
+      let completedDiv = document.getElementById("completedDiv");
+      completedDiv.style.display = "block";
+      // console.log("completedCount", completedCount);
+      // TODO:  track times on completed items in local storage
+      //        and remove after midnight
       let getInspiredButtonRow = document.getElementById("getInspiredRow");
-
-      if (completedCount === 3) {
-        getInspiredButtonID.appendChild(
-          document.createTextNode("psst... need a boost?")
-        );
-        // getInspiredButtonID.style.display = "block";
+      let HALquoteColumn = document.getElementById("HALquoteColumn");
+      // TODO:  make this a random HAL quote
+      if (completedCount % 3 === 0) {
+        HALquoteColumn.appendChild(document.createTextNode(HALquotes[1]));
         getInspiredButtonRow.style.display = "block";
+        HALquoteColumn.style.display = "block";
       } else {
-        // getInspiredButtonID.style.display = "none";
         getInspiredButtonRow.style.display = "none";
+        HALquoteColumn.style.display = "none";
       }
       break;
     default:
@@ -91,12 +97,12 @@ const saveToLocalStorage = (text, timestamp) => {
 /*-----------------------------------------------------------------
 ENABLE CHECKING OF ITEMS
 -----------------------------------------------------------------*/
-const enableCheckMarks = () => {
+const enableCheckingOfMarks = () => {
   let checkMark = document.getElementById(`toDo${count}`);
   checkMark.onclick = function() {
     // find and show the "toDone" portion of the page
-    let completedDiv = document.getElementById("completed");
-    completedDiv.style.display = "block";
+    // let completedDiv = document.getElementById("completedDiv");
+    // completedDiv.style.display = "block";
 
     // get the list item and it's timestamp ID
     const completedItem = this.previousSibling.innerHTML;
@@ -109,7 +115,14 @@ const enableCheckMarks = () => {
     addItemToList(completedItem, undefined, "toDoneList");
 
     localStorage.removeItem(completedItemID);
-    console.log("localStorage", localStorage);
+
+    const timeStamp = new Date().getTime().toString();
+    const completedTimeStamp = `${timeStamp}-completed`;
+
+    console.log("completedTimeStamp", completedTimeStamp);
+    saveToLocalStorage(completedItem, completedTimeStamp);
+
+    // console.log("localStorage", localStorage);
   };
 };
 

@@ -12,14 +12,14 @@ window.onload = function() {
 LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 -----------------------------------------------------------------*/
 const loadItems = () => {
-  // localStorage.clear();
+  localStorage.clear();
   const items = { ...localStorage };
+  console.log("completedCount on load", completedCount);
   console.log("localStorage on load:", items);
 
   const entries = Object.entries(items);
 
   for (const [timestamp, text] of entries) {
-    // const number = parseInt(toDoNumber.slice(4));
     createListItem(text, timestamp);
   }
 };
@@ -48,7 +48,6 @@ document.body.addEventListener("keyup", function(e) {
   HANDLE ADD BUTTON CLICK
   -----------------------------------------------------------------*/
 let addButton = document.getElementById("todo-add-button");
-
 addButton.onclick = function() {
   var text = document.getElementById("todo-item").value;
   if (text !== "") {
