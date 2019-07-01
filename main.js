@@ -2,9 +2,9 @@
 HANDLE GETTING BACKGROUND IMAGES
 -----------------------------------------------------------------*/
 window.onload = function() {
-  // document.body.style.backgroundImage =
-  //   // "url(https://source.unsplash.com/random/1600x900/?nature)";
-  //   "url(https://source.unsplash.com/collection/4345819/)";
+  document.body.style.backgroundImage =
+    // "url(https://source.unsplash.com/random/1600x900/?nature)";
+    "url(https://source.unsplash.com/collection/4345819/)";
   loadItems();
 };
 
@@ -12,7 +12,7 @@ window.onload = function() {
 LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 -----------------------------------------------------------------*/
 const loadItems = () => {
-  localStorage.clear();
+  // localStorage.clear();
   const items = { ...localStorage };
   console.log("completedCount on load", completedCount);
   console.log("localStorage on load:", items);
