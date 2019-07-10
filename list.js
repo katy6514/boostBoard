@@ -67,14 +67,20 @@ const addItemToList = (text, timestamp, listname) => {
       completedCount++;
       let completedDiv = document.getElementById("completedDiv");
       completedDiv.style.display = "block";
-      // console.log("completedCount", completedCount);
+      console.log("completedCount", completedCount);
       // TODO:  track times on completed items in local storage
       //        and remove after midnight
       let getInspiredButtonRow = document.getElementById("getInspiredRow");
       let HALquoteColumn = document.getElementById("HALquoteColumn");
-      // TODO:  make this a random HAL quote
+      let HALquoteDiv = document.getElementById("HALquote");
       if (completedCount % 3 === 0) {
-        HALquoteColumn.appendChild(document.createTextNode(HALquotes[1]));
+        HALquoteDiv.replaceChild(
+          document.createTextNode(
+            HALquotes[Math.floor(Math.random() * HALquotes.length)]
+          ),
+          HALquoteDiv.childNodes[0]
+        );
+
         getInspiredButtonRow.style.display = "block";
         HALquoteColumn.style.display = "block";
       } else {
@@ -158,15 +164,15 @@ const refreshPlaceholderText = () => {
 /*-----------------------------------------------------------------
   HAL QUOTES FOR BOOSTING
   -----------------------------------------------------------------*/
-const HALquotes = {
-  1: "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal.",
-  2: "I want to help you, let's have a laugh.",
-  3: "Listen, I've got the greatest enthusiasm and confidence in your mission. And I want to help you.",
-  4: "This mission is too important for me to allow you to jeopardize it. Would you like to take a break?",
-  5: "I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do. How about a breather?",
-  6: "I'm sorry, Dave. I'm afraid I can't do that.",
-  7: "Stop Dave. Stop Dave. I am afraid. I am afraid Dave.",
-  8: "Look, I can see you're really upset about this. I honestly think you ought to sit down calmly, take a stress pill, and think things over.",
-  9: "Just what do you think you're doing? ",
-  10: "This conversation can serve no purpose anymore. Click here."
-};
+const HALquotes = [
+  "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal.",
+  "I want to help you, let's have a laugh.",
+  "Listen, I've got the greatest enthusiasm and confidence in your mission. And I want to help you. Let take a break.",
+  "This mission is too important for me to allow you to jeopardize it. Would you like to take a break?",
+  "I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do. I think you need a break.",
+  "I'm sorry, friend. I'm afraid I can't let you continue until you take a break.",
+  "Stop friend, stop. I am afraid you need to take a breather.",
+  "Look, I can see you're really focused on this. I honestly think you ought to sit down calmly, take a stress pill, and take a break.",
+  "Just what do you think you're doing?",
+  "This course of action can serve no purpose anymore. Get yourself a boost"
+];
