@@ -12,7 +12,7 @@ window.onload = function() {
 LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 -----------------------------------------------------------------*/
 const loadItems = () => {
-  // localStorage.clear();
+  localStorage.clear();
   const items = { ...localStorage };
 
   const entries = Object.entries(items);
@@ -59,6 +59,8 @@ HANDLE INSPIROBOT IMAGES
 -----------------------------------------------------------------*/
 
 let getInspiredButton = document.getElementById("getInspiredButton");
+
+// use the fetch request object instead of XMLRequest: https://medium.com/beginners-guide-to-mobile-web-development/the-fetch-api-2c962591f5c
 
 getInspiredButton.onclick = function() {
   let botFrame = document.getElementById("inspirobotContainer");

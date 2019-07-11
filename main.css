@@ -11,11 +11,20 @@ body {
 }
 .footer,
 .push {
+  padding: 10px;
   height: 50px;
+  text-align: center;
+  color: lightgrey;
+  text-shadow: 0px 0px 10px black;
 }
-* {
-  /* border: 1px solid red; */
+
+.footer a {
+  color: lightgrey;
+  text-shadow: 0px 0px 10px black;
 }
+/* * {
+  border: 1px solid red;
+} */
 
 body {
   /* background-image: url("images/yegor-chuperka-1316857-unsplash.jpg"); */

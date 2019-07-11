@@ -2,21 +2,24 @@ let count = 0;
 let completedCount = 0;
 
 /*-----------------------------------------------------------------
-  CREATE TO DO LIST ITEM
+  MIDNIGHT
+  -----------------------------------------------------------------*/
+
+let midnightThisMorning = new Date();
+
+midnightThisMorning.setHours(0);
+midnightThisMorning.setMinutes(0);
+midnightThisMorning.setSeconds(0);
+
+/*-----------------------------------------------------------------
+  CHECK IF COMPLETED TODAY
   -----------------------------------------------------------------*/
 
 const completedToday = timestamp => {
-  let midnightThisMorning = new Date();
-
-  midnightThisMorning.setHours(0);
-  midnightThisMorning.setMinutes(0);
-  midnightThisMorning.setSeconds(0);
-
   let doneDate = new Date(parseInt(timestamp));
 
   let result = false;
   if (doneDate > midnightThisMorning) {
-    console.log("completed TODAY!");
     result = true;
   }
   return result;
@@ -27,18 +30,13 @@ const completedToday = timestamp => {
   -----------------------------------------------------------------*/
 
 const createListItem = (text, timestamp = undefined) => {
-  // console.log("text", text);
-  // console.log("timestamp", timestamp);
-
   if (timestamp && timestamp.split("-")[1] === "completed") {
     if (completedToday(timestamp.split("-")[0])) {
       addItemToList(text, timestamp.split("-")[0], "toDoneList");
     } else {
       localStorage.removeItem(timestamp.split("-")[0]);
     }
-    // completedCount++;
   } else {
-    // console.log("timestamp", timestamp);
     addItemToList(text, timestamp, "toDoList");
     enableCheckingOfMarks();
   }
@@ -81,7 +79,6 @@ const addItemToList = (text, timestamp, listname) => {
       break;
     case "toDoneList":
       count--;
-      completedCount++;
       let completedDiv = document.getElementById("completedDiv");
       completedDiv.style.display = "block";
       // TODO:  track times on completed items in local storage
@@ -106,6 +103,7 @@ ENABLE CHECKING OF ITEMS
 const enableCheckingOfMarks = () => {
   let checkMark = document.getElementById(`toDo${count}`);
   checkMark.onclick = function() {
+    completedCount++;
     let HALsection = document.getElementById("HALsection");
     let HALquoteDiv = document.getElementById("HALquote");
     if (completedCount % 3 === 0) {
@@ -129,17 +127,14 @@ const enableCheckingOfMarks = () => {
     this.parentElement.remove();
 
     // add the list item to the "toDone" list
-    addItemToList(completedItem, undefined, "toDoneList");
 
     localStorage.removeItem(completedItemID);
 
     const timeStamp = new Date().getTime().toString();
     const completedTimeStamp = `${timeStamp}-completed`;
+    addItemToList(completedItem, completedTimeStamp, "toDoneList");
 
-    console.log("completedTimeStamp", completedTimeStamp);
     saveToLocalStorage(completedItem, completedTimeStamp);
-
-    // console.log("localStorage", localStorage);
   };
 };
 
