@@ -14,8 +14,6 @@ LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 const loadItems = () => {
   // localStorage.clear();
   const items = { ...localStorage };
-  console.log("completedCount on load", completedCount);
-  console.log("localStorage on load:", items);
 
   const entries = Object.entries(items);
 
@@ -27,7 +25,7 @@ const loadItems = () => {
 /*-----------------------------------------------------------------
 HANDLE FORM SUBMIT
 -----------------------------------------------------------------*/
-var form = document.getElementById("todo-form");
+let form = document.getElementById("todo-form");
 const handleForm = event => {
   event.preventDefault();
 };
@@ -49,7 +47,7 @@ document.body.addEventListener("keyup", function(e) {
   -----------------------------------------------------------------*/
 let addButton = document.getElementById("todo-add-button");
 addButton.onclick = function() {
-  var text = document.getElementById("todo-item").value;
+  let text = document.getElementById("todo-item").value;
   if (text !== "") {
     // create ToDo item and add to ToDo list
     createListItem(text);
@@ -63,43 +61,24 @@ HANDLE INSPIROBOT IMAGES
 let getInspiredButton = document.getElementById("getInspiredButton");
 
 getInspiredButton.onclick = function() {
-  var botFrame = document.getElementById("inspirobotContainer");
-  var botImg = document.getElementById("inspirobotImg");
+  let botFrame = document.getElementById("inspirobotContainer");
+  let botImg = document.getElementById("inspirobotImg");
+  let HALsection = document.getElementById("HALsection");
 
-  if (botFrame.style.display !== "block") {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        // retrieve data from server
-        botImg.src = this.responseText;
-      }
-    };
-    // send data to server
-    xhttp.open("GET", "https://inspirobot.me/api?generate=true", true);
-    xhttp.send();
-    botFrame.style.display = "block";
-    window.setTimeout(function() {
-      getInspiredButton.replaceChild(
-        document.createTextNode("get back to work!"),
-        getInspiredButton.childNodes[0]
-      );
-    }, 3000);
-  } else {
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // retrieve data from server
+      botImg.src = this.responseText;
+    }
+  };
+  // send data to server
+  xhttp.open("GET", "https://inspirobot.me/api?generate=true", true);
+  xhttp.send();
+  botFrame.style.display = "block";
+  window.setTimeout(function() {
+    HALsection.style.display = "none";
     botFrame.style.display = "none";
     botImg.src = "";
-    getInspiredButton.replaceChild(
-      document.createTextNode("need another boost?"),
-      getInspiredButton.childNodes[0]
-    );
-  }
+  }, 30000);
 };
-
-// fs.readFile('/file.json', (err, data) => {
-//   if (err !== null) {
-//     //handle error
-//     console.log(err)
-//     return
-//   }
-//   //no errors, process data
-//   console.log(data)
-// })

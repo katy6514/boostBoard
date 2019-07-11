@@ -12,14 +12,14 @@
   <body>
     <div class="wrapper">
       <div class="section group">
-        <div class="col span_5_of_5 greeting-container">
-          <h1 class="greeting" id="greeting">HEY DO THESE THINGS</h1>
+        <div id="header-container" class="col span_5_of_5 ">
+          <h1 id="header">HEY DO THESE THINGS</h1>
         </div>
       </div>
       <div class="section group">
         <div class="col span_1_of_5"></div>
         <div id="mainColumn" class="col span_3_of_5">
-          <h2 id="mainHeader">Priorities:</h2>
+          <h2 id="toDoHeader">PRIORITIES</h2>
           <!-- <div class="loader">Loading...</div> -->
 
           <ul id="toDoList"></ul>
@@ -41,18 +41,11 @@
       </div>
 
       <!-- HAL ROW -->
-
-      <div class="section group " id="getInspiredRow">
+      <div class="section group scale-up-ver-center " id="HALsection">
         <div class="col span_1_of_5"></div>
 
-        <div id="HALquoteColumn" class="col span_3_of_5 HALsection">
+        <div class="col span_3_of_5 ">
           <div id="HALquote">test</div>
-          <img
-            id="HALredEye"
-            src="images/clipart-hal-9000-lens-7c60.svg"
-            alt="Red
-              HAL eye from 2001: A Space Odyssey"
-          />
 
           <button id="getInspiredButton">Click here for boost</button>
           <div id="inspirobotContainer">
@@ -64,15 +57,21 @@
           </div>
         </div>
 
-        <div class="col span_1_of_5"></div>
+        <div class="col span_1_of_5">
+          <img
+            id="HALredEye"
+            src="images/greenHAL.png"
+            alt="Red
+                HAL eye from 2001: A Space Odyssey"
+          />
+        </div>
       </div>
-
       <!-- /HAL ROW -->
 
       <div class="section group">
         <div class="col span_1_of_5"></div>
         <div id="completedDiv" class="col span_3_of_5">
-          <h3 id="mainHeader">Look at what you did today!</h3>
+          <h3 id="toDoneHeader">Look at what you did today!</h3>
           <ol id="toDoneList"></ol>
         </div>
         <div class="col span_1_of_5"></div>

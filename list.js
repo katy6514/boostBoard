@@ -5,15 +5,40 @@ let completedCount = 0;
   CREATE TO DO LIST ITEM
   -----------------------------------------------------------------*/
 
+const completedToday = timestamp => {
+  let midnightThisMorning = new Date();
+
+  midnightThisMorning.setHours(0);
+  midnightThisMorning.setMinutes(0);
+  midnightThisMorning.setSeconds(0);
+
+  let doneDate = new Date(parseInt(timestamp));
+
+  let result = false;
+  if (doneDate > midnightThisMorning) {
+    console.log("completed TODAY!");
+    result = true;
+  }
+  return result;
+};
+
+/*-----------------------------------------------------------------
+  CREATE TO DO LIST ITEM
+  -----------------------------------------------------------------*/
+
 const createListItem = (text, timestamp = undefined) => {
   // console.log("text", text);
   // console.log("timestamp", timestamp);
 
   if (timestamp && timestamp.split("-")[1] === "completed") {
-    addItemToList(text, timestamp.split("-")[0], "toDoneList");
+    if (completedToday(timestamp.split("-")[0])) {
+      addItemToList(text, timestamp.split("-")[0], "toDoneList");
+    } else {
+      localStorage.removeItem(timestamp.split("-")[0]);
+    }
     // completedCount++;
   } else {
-    console.log("timestamp", timestamp);
+    // console.log("timestamp", timestamp);
     addItemToList(text, timestamp, "toDoList");
     enableCheckingOfMarks();
   }
@@ -30,28 +55,20 @@ HANDLE ADDING ITEM TO ANY LIST
 const addItemToList = (text, timestamp, listname) => {
   let newTimestamp = new Date().getTime();
 
-  // grab either "toDo" list or "toDone" list
-  var ul = document.getElementById(listname);
-  // create a list elment
-  var li = document.createElement("li");
-  // give list element an id
+  let ul = document.getElementById(listname);
+  let li = document.createElement("li");
   li.setAttribute("id", timestamp || newTimestamp);
-  // assign a class
   li.setAttribute("class", "toDoItem");
 
-  // create a p
-  var p = document.createElement("p");
-  // stuff list item text into that p
+  let p = document.createElement("p");
   p.appendChild(document.createTextNode(text));
-  // add p to li
   li.appendChild(p);
-  // add to list
   ul.appendChild(li);
 
   switch (listname) {
     case "toDoList":
       count++;
-      var checkMark = document.createElement("i");
+      let checkMark = document.createElement("i");
       checkMark.setAttribute("id", `toDo${count}`);
       checkMark.setAttribute("cursor", "pointer");
       checkMark.setAttribute(
@@ -67,26 +84,9 @@ const addItemToList = (text, timestamp, listname) => {
       completedCount++;
       let completedDiv = document.getElementById("completedDiv");
       completedDiv.style.display = "block";
-      console.log("completedCount", completedCount);
       // TODO:  track times on completed items in local storage
       //        and remove after midnight
-      let getInspiredButtonRow = document.getElementById("getInspiredRow");
-      let HALquoteColumn = document.getElementById("HALquoteColumn");
-      let HALquoteDiv = document.getElementById("HALquote");
-      if (completedCount % 3 === 0) {
-        HALquoteDiv.replaceChild(
-          document.createTextNode(
-            HALquotes[Math.floor(Math.random() * HALquotes.length)]
-          ),
-          HALquoteDiv.childNodes[0]
-        );
 
-        getInspiredButtonRow.style.display = "block";
-        HALquoteColumn.style.display = "block";
-      } else {
-        getInspiredButtonRow.style.display = "none";
-        HALquoteColumn.style.display = "none";
-      }
       break;
     default:
       console.log("you did something wrong");
@@ -106,9 +106,20 @@ ENABLE CHECKING OF ITEMS
 const enableCheckingOfMarks = () => {
   let checkMark = document.getElementById(`toDo${count}`);
   checkMark.onclick = function() {
-    // find and show the "toDone" portion of the page
-    // let completedDiv = document.getElementById("completedDiv");
-    // completedDiv.style.display = "block";
+    let HALsection = document.getElementById("HALsection");
+    let HALquoteDiv = document.getElementById("HALquote");
+    if (completedCount % 3 === 0) {
+      HALquoteDiv.replaceChild(
+        document.createTextNode(
+          HALquotes[Math.floor(Math.random() * HALquotes.length)]
+        ),
+        HALquoteDiv.childNodes[0]
+      );
+
+      HALsection.style.display = "block";
+    } else {
+      HALsection.style.display = "none";
+    }
 
     // get the list item and it's timestamp ID
     const completedItem = this.previousSibling.innerHTML;
@@ -137,7 +148,7 @@ const enableCheckingOfMarks = () => {
   -----------------------------------------------------------------*/
 const refreshPlaceholderText = () => {
   let list = document.getElementById("toDoList");
-  var input = document.getElementById("todo-item");
+  let input = document.getElementById("todo-item");
   if (count <= 1) {
     list.style.display = "block";
     input.setAttribute("placeholder", "Also do this other thing...");
@@ -165,13 +176,13 @@ const refreshPlaceholderText = () => {
   HAL QUOTES FOR BOOSTING
   -----------------------------------------------------------------*/
 const HALquotes = [
-  "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal.",
-  "I want to help you, let's have a laugh.",
-  "Listen, I've got the greatest enthusiasm and confidence in your mission. And I want to help you. Let take a break.",
+  "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal after we both take a break.",
+  "I want to help you, let's take a break.",
+  "Listen, I've got the greatest enthusiasm and confidence in your mission. And I want to help you. Let's take a break.",
   "This mission is too important for me to allow you to jeopardize it. Would you like to take a break?",
   "I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do. I think you need a break.",
   "I'm sorry, friend. I'm afraid I can't let you continue until you take a break.",
-  "Stop friend, stop. I am afraid you need to take a breather.",
+  "Stop friend, stop. I am afraid. You need to take a break.",
   "Look, I can see you're really focused on this. I honestly think you ought to sit down calmly, take a stress pill, and take a break.",
   "Just what do you think you're doing?",
   "This course of action can serve no purpose anymore. Get yourself a boost"
