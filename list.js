@@ -34,10 +34,13 @@ const createListItem = (text, timestamp = undefined) => {
     if (completedToday(timestamp.split("-")[0])) {
       addItemToList(text, timestamp.split("-")[0], "toDoneList");
     } else {
-      localStorage.removeItem(timestamp.split("-")[0]);
+      // console.log(timestamp);
+      // console.log(localStorage.removeItem(timestamp));
+      localStorage.removeItem(timestamp);
     }
   } else {
     addItemToList(text, timestamp, "toDoList");
+    enableEditing();
     enableCheckingOfMarks();
   }
 
@@ -49,6 +52,7 @@ const createListItem = (text, timestamp = undefined) => {
 
 /*-----------------------------------------------------------------
 HANDLE ADDING ITEM TO ANY LIST
+ - this handles all the UI stuff
 -----------------------------------------------------------------*/
 const addItemToList = (text, timestamp, listname) => {
   let newTimestamp = new Date().getTime();
@@ -65,7 +69,26 @@ const addItemToList = (text, timestamp, listname) => {
 
   switch (listname) {
     case "toDoList":
-      count++;
+      count = document.getElementById("toDoList").childElementCount; // + 1;
+      p.setAttribute("id", `toDoText${count}`);
+
+      let trashcanIcon = document.createElement("i");
+      trashcanIcon.setAttribute("id", `deleteToDo${count}`);
+      trashcanIcon.setAttribute("cursor", "pointer");
+      trashcanIcon.setAttribute(
+        "class",
+        "material-icons md-36 md-light deleteItem"
+      );
+      trashcanIcon.appendChild(document.createTextNode("delete"));
+      trashcanIcon.style.display = "none";
+
+      let editIcon = document.createElement("i");
+      editIcon.setAttribute("id", `editToDo${count}`);
+      editIcon.setAttribute("cursor", "pointer");
+      editIcon.setAttribute("class", "material-icons md-36 md-light editItem");
+      editIcon.appendChild(document.createTextNode("edit"));
+      editIcon.style.display = "none";
+
       let checkMark = document.createElement("i");
       checkMark.setAttribute("id", `toDo${count}`);
       checkMark.setAttribute("cursor", "pointer");
@@ -74,15 +97,37 @@ const addItemToList = (text, timestamp, listname) => {
         "material-icons md-48 md-light checkItem"
       );
       checkMark.appendChild(document.createTextNode("done"));
+
+      li.appendChild(editIcon);
+      li.appendChild(trashcanIcon);
       li.appendChild(checkMark);
+
+      li.addEventListener(
+        "mouseover",
+        function(event) {
+          editIcon.style.display = "block";
+          trashcanIcon.style.display = "block";
+        },
+        false
+      );
+      li.addEventListener(
+        "mouseout",
+        function(event) {
+          editIcon.style.display = "none";
+          trashcanIcon.style.display = "none";
+        },
+        false
+      );
+
       saveToLocalStorage(text, timestamp || newTimestamp);
+
       break;
     case "toDoneList":
       count--;
+      completedCount++;
+
       let completedDiv = document.getElementById("completedDiv");
       completedDiv.style.display = "block";
-      // TODO:  track times on completed items in local storage
-      //        and remove after midnight
 
       break;
     default:
@@ -98,22 +143,38 @@ const saveToLocalStorage = (text, timestamp) => {
 };
 
 /*-----------------------------------------------------------------
+ENABLE EDITING OF ITEMS
+-----------------------------------------------------------------*/
+const enableEditing = () => {
+  let itemToEdit = document.getElementById(`toDoText${count}`);
+  itemToEdit.onclick = function() {
+    console.log("itemToEdit", itemToEdit);
+    console.log("textToEdit", itemToEdit.innerHTML);
+    console.log("itemToEdit.parentNode", itemToEdit.parentNode);
+    // get the list item and it's timestamp ID
+    // const completedItem = itemToEdit.previousSibling.innerHTML;
+    const completedItemID = this.previousSibling.parentNode.id;
+  };
+};
+
+/*-----------------------------------------------------------------
 ENABLE CHECKING OF ITEMS
 -----------------------------------------------------------------*/
 const enableCheckingOfMarks = () => {
   let checkMark = document.getElementById(`toDo${count}`);
   checkMark.onclick = function() {
+    console.log("checkMark", checkMark);
     completedCount++;
     let HALsection = document.getElementById("HALsection");
     let HALquoteDiv = document.getElementById("HALquote");
     if (completedCount % 3 === 0) {
+      getInspiredButton.style.display = "block";
       HALquoteDiv.replaceChild(
         document.createTextNode(
           HALquotes[Math.floor(Math.random() * HALquotes.length)]
         ),
         HALquoteDiv.childNodes[0]
       );
-
       HALsection.style.display = "block";
     } else {
       HALsection.style.display = "none";
@@ -125,15 +186,12 @@ const enableCheckingOfMarks = () => {
 
     // remove the list item from the "toDo" list
     this.parentElement.remove();
-
-    // add the list item to the "toDone" list
-
     localStorage.removeItem(completedItemID);
 
+    // add the list item to the "toDone" list
     const timeStamp = new Date().getTime().toString();
     const completedTimeStamp = `${timeStamp}-completed`;
     addItemToList(completedItem, completedTimeStamp, "toDoneList");
-
     saveToLocalStorage(completedItem, completedTimeStamp);
   };
 };

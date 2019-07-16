@@ -2,22 +2,44 @@
 HANDLE GETTING BACKGROUND IMAGES
 -----------------------------------------------------------------*/
 window.onload = function() {
-  document.body.style.backgroundImage =
-    // "url(https://source.unsplash.com/random/1600x900/?nature)";
-    "url(https://source.unsplash.com/collection/4345819/)";
+  // 151521
+  // 17098
+  // 175083
+  // 573009
+  let unsplashCollection = 4345819;
+  if (localStorage.unsplash) {
+    unsplashCollection = localStorage.unsplash;
+  }
+  document.body.style.backgroundImage = `url(https://source.unsplash.com/collection/${unsplashCollection}/)`;
   loadItems();
 };
+
+/*-----------------------------------------------------------------
+SORT BY TIMESTAMP
+-----------------------------------------------------------------*/
+
+function sortByTimestamp(a, b) {
+  if (a[0] < b[0]) return -1;
+  if (a[0] > b[0]) return 1;
+  return 0;
+}
 
 /*-----------------------------------------------------------------
 LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 -----------------------------------------------------------------*/
 const loadItems = () => {
-  localStorage.clear();
+  // localStorage.clear();
   const items = { ...localStorage };
+  console.log(items);
 
   const entries = Object.entries(items);
 
-  for (const [timestamp, text] of entries) {
+  filteredEntries = entries.filter(entry => entry[0] !== "unsplash");
+
+  sortedEntries = filteredEntries.sort(sortByTimestamp);
+
+  for (const [timestamp, text] of sortedEntries) {
+    // console.log(timestamp, text);
     createListItem(text, timestamp);
   }
 };
@@ -32,9 +54,9 @@ const handleForm = event => {
 form.addEventListener("submit", handleForm);
 
 /*-----------------------------------------------------------------
-HANDLE ENTER KEY PRESS
+HANDLE WRAPPER DIV ENTER KEY PRESS
 -----------------------------------------------------------------*/
-document.body.addEventListener("keyup", function(e) {
+document.getElementById("wrapper").addEventListener("keyup", function(e) {
   e.preventDefault();
   if (e.keyCode == 13) {
     // Simulate clicking on the submit button.
@@ -53,6 +75,21 @@ addButton.onclick = function() {
     createListItem(text);
   }
 };
+
+/*-----------------------------------------------------------------
+SAVE USER'S UNSPLASH COLLECTION
+-----------------------------------------------------------------*/
+var unsplashInput = document.getElementById("unsplashInput");
+
+unsplashInput.addEventListener("keyup", function(event) {
+  event.preventDefault();
+  if (event.keyCode === 10 || event.keyCode === 13) {
+    // Simulate clicking on the submit button.
+    // console.log("unsplashInput", unsplashInput);
+    localStorage.unsplash = unsplashInput.value;
+    location.reload();
+  }
+});
 
 /*-----------------------------------------------------------------
 HANDLE INSPIROBOT IMAGES
@@ -78,6 +115,8 @@ getInspiredButton.onclick = function() {
   xhttp.open("GET", "https://inspirobot.me/api?generate=true", true);
   xhttp.send();
   botFrame.style.display = "block";
+  getInspiredButton.style.display = "none";
+
   window.setTimeout(function() {
     HALsection.style.display = "none";
     botFrame.style.display = "none";
