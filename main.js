@@ -6,6 +6,8 @@ window.onload = function() {
   // 17098
   // 175083
   // 573009
+  // 1368747
+  // 4345819
   let unsplashCollection = 4345819;
   if (localStorage.unsplash) {
     unsplashCollection = localStorage.unsplash;
@@ -56,7 +58,7 @@ form.addEventListener("submit", handleForm);
 /*-----------------------------------------------------------------
 HANDLE WRAPPER DIV ENTER KEY PRESS
 -----------------------------------------------------------------*/
-document.getElementById("wrapper").addEventListener("keyup", function(e) {
+document.getElementById("todo-item").addEventListener("keyup", function(e) {
   e.preventDefault();
   if (e.keyCode == 13) {
     // Simulate clicking on the submit button.
@@ -72,6 +74,7 @@ addButton.onclick = function() {
   let text = document.getElementById("todo-item").value;
   if (text !== "") {
     // create ToDo item and add to ToDo list
+
     createListItem(text);
   }
 };

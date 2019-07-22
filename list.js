@@ -51,6 +51,55 @@ const createListItem = (text, timestamp = undefined) => {
 };
 
 /*-----------------------------------------------------------------
+HANDLE ADDING delete and edit icons
+-----------------------------------------------------------------*/
+const addEditAndDeleteIcons = (li, count) => {
+  let trashcanIcon = document.createElement("i");
+  trashcanIcon.setAttribute("id", `deleteToDo${count}`);
+  trashcanIcon.setAttribute(
+    "class",
+    "material-icons md-36 md-light deleteItem smallIcons"
+  );
+  trashcanIcon.appendChild(document.createTextNode("delete"));
+  trashcanIcon.style.display = "none";
+
+  let editIcon = document.createElement("i");
+  editIcon.setAttribute("id", `editToDo${count}`);
+  editIcon.setAttribute(
+    "class",
+    "material-icons md-36 md-light editItem smallIcons"
+  );
+  editIcon.appendChild(document.createTextNode("edit"));
+  editIcon.style.display = "none";
+
+  let checkMark = document.createElement("i");
+  checkMark.setAttribute("id", `toDo${count}`);
+  checkMark.setAttribute("class", "material-icons md-48 md-light checkItem");
+  checkMark.appendChild(document.createTextNode("done"));
+
+  li.appendChild(editIcon);
+  li.appendChild(trashcanIcon);
+  li.appendChild(checkMark);
+
+  li.addEventListener(
+    "mouseover",
+    function(event) {
+      editIcon.style.display = "block";
+      trashcanIcon.style.display = "block";
+    },
+    false
+  );
+  li.addEventListener(
+    "mouseout",
+    function(event) {
+      editIcon.style.display = "none";
+      trashcanIcon.style.display = "none";
+    },
+    false
+  );
+};
+
+/*-----------------------------------------------------------------
 HANDLE ADDING ITEM TO ANY LIST
  - this handles all the UI stuff
 -----------------------------------------------------------------*/
@@ -72,52 +121,7 @@ const addItemToList = (text, timestamp, listname) => {
       count = document.getElementById("toDoList").childElementCount; // + 1;
       p.setAttribute("id", `toDoText${count}`);
 
-      let trashcanIcon = document.createElement("i");
-      trashcanIcon.setAttribute("id", `deleteToDo${count}`);
-      trashcanIcon.setAttribute("cursor", "pointer");
-      trashcanIcon.setAttribute(
-        "class",
-        "material-icons md-36 md-light deleteItem"
-      );
-      trashcanIcon.appendChild(document.createTextNode("delete"));
-      trashcanIcon.style.display = "none";
-
-      let editIcon = document.createElement("i");
-      editIcon.setAttribute("id", `editToDo${count}`);
-      editIcon.setAttribute("cursor", "pointer");
-      editIcon.setAttribute("class", "material-icons md-36 md-light editItem");
-      editIcon.appendChild(document.createTextNode("edit"));
-      editIcon.style.display = "none";
-
-      let checkMark = document.createElement("i");
-      checkMark.setAttribute("id", `toDo${count}`);
-      checkMark.setAttribute("cursor", "pointer");
-      checkMark.setAttribute(
-        "class",
-        "material-icons md-48 md-light checkItem"
-      );
-      checkMark.appendChild(document.createTextNode("done"));
-
-      li.appendChild(editIcon);
-      li.appendChild(trashcanIcon);
-      li.appendChild(checkMark);
-
-      li.addEventListener(
-        "mouseover",
-        function(event) {
-          editIcon.style.display = "block";
-          trashcanIcon.style.display = "block";
-        },
-        false
-      );
-      li.addEventListener(
-        "mouseout",
-        function(event) {
-          editIcon.style.display = "none";
-          trashcanIcon.style.display = "none";
-        },
-        false
-      );
+      addEditAndDeleteIcons(li, count);
 
       saveToLocalStorage(text, timestamp || newTimestamp);
 
@@ -145,15 +149,71 @@ const saveToLocalStorage = (text, timestamp) => {
 /*-----------------------------------------------------------------
 ENABLE EDITING OF ITEMS
 -----------------------------------------------------------------*/
+// TODO: update local storage!
+
 const enableEditing = () => {
-  let itemToEdit = document.getElementById(`toDoText${count}`);
+  let itemToEdit = document.getElementById(`editToDo${count}`);
   itemToEdit.onclick = function() {
-    console.log("itemToEdit", itemToEdit);
-    console.log("textToEdit", itemToEdit.innerHTML);
-    console.log("itemToEdit.parentNode", itemToEdit.parentNode);
+    let pNodeToReplace = itemToEdit.previousSibling;
+    let pNodeToReplaceID = itemToEdit.previousSibling.id;
+    let itemCount = pNodeToReplaceID.slice(-1);
+    console.log("itemCount", itemCount);
+    let editIcon = pNodeToReplace.nextSibling;
+    let trashcanIcon = pNodeToReplace.nextSibling.nextSibling;
+
+    let parentNodeLi = pNodeToReplace.parentNode;
+    parentNodeLi.innerHTML = "";
+    let inputNode = document.createElement("input");
+    inputNode.type = "text";
+    inputNode.value = pNodeToReplace.innerHTML;
+    inputNode.setAttribute("id", `todo-input${count}`);
+    inputNode.setAttribute("class", "todo-input");
+    parentNodeLi.appendChild(inputNode);
+
+    let saveIcon = document.createElement("i");
+    saveIcon.setAttribute("id", `save${count}`);
+    saveIcon.setAttribute("class", "material-icons md-48 md-light saveItem");
+    saveIcon.appendChild(document.createTextNode("save"));
+
+    parentNodeLi.appendChild(saveIcon);
+
+    inputNode.addEventListener("keyup", function(e) {
+      e.preventDefault();
+      if (e.keyCode == 13) {
+        // Simulate clicking on the submit button.
+        let newText = inputNode.value;
+        // console.log("new text", newText);
+        parentNodeLi.innerHTML = "";
+
+        let p = document.createElement("p");
+        p.appendChild(document.createTextNode(newText));
+        parentNodeLi.appendChild(p);
+
+        addEditAndDeleteIcons(parentNodeLi, count);
+        enableEditing();
+      }
+    });
+
+    // on enter
+
+    // parentNodeLi.replaceChild(inputNode, pNodeToReplace);
+    // parentNodeLi.removeEventListener("mouseover", function(event) {
+    //   editIcon.style.display = "block";
+    //   trashcanIcon.style.display = "block";
+    // });
+    // editIcon.style.display = "none";
+    // trashcanIcon.style.display = "none";
+
+    // let parentNodeID = pNodeToReplace.parentNode.id;
+    // console.log("itemToEdit", itemToEdit);
+    // console.log("textToEdit", itemToEdit.previousSibling.innerHTML);
+    console.log("pNodeToReplace", pNodeToReplace);
+    console.log("parentNodeLi", parentNodeLi);
+
     // get the list item and it's timestamp ID
     // const completedItem = itemToEdit.previousSibling.innerHTML;
-    const completedItemID = this.previousSibling.parentNode.id;
+    // const itemToEditID = this.previousSibling.parentNode.id;
+    // console.log("itemToEditID", itemToEditID);
   };
 };
 
@@ -181,7 +241,8 @@ const enableCheckingOfMarks = () => {
     }
 
     // get the list item and it's timestamp ID
-    const completedItem = this.previousSibling.innerHTML;
+    const completedItem = this.previousSibling.previousSibling.previousSibling
+      .innerHTML;
     const completedItemID = this.previousSibling.parentNode.id;
 
     // remove the list item from the "toDo" list
