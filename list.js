@@ -7,9 +7,7 @@ let completedCount = 0;
 
 let midnightThisMorning = new Date();
 
-midnightThisMorning.setHours(0);
-midnightThisMorning.setMinutes(0);
-midnightThisMorning.setSeconds(0);
+midnightThisMorning.setHours(0, 0, 0, 0);
 
 /*-----------------------------------------------------------------
   CHECK IF COMPLETED TODAY
@@ -51,7 +49,7 @@ const createListItem = (text, timestamp = undefined) => {
 };
 
 /*-----------------------------------------------------------------
-HANDLE ADDING delete and edit icons
+HANDLE ADDING DELETE AND EDIT ICONS
 -----------------------------------------------------------------*/
 const addEditAndDeleteIcons = (li, count) => {
   let trashcanIcon = document.createElement("i");
@@ -149,17 +147,12 @@ const saveToLocalStorage = (text, timestamp) => {
 /*-----------------------------------------------------------------
 ENABLE EDITING OF ITEMS
 -----------------------------------------------------------------*/
-// TODO: update local storage!
-
 const enableEditing = () => {
   let itemToEdit = document.getElementById(`editToDo${count}`);
   itemToEdit.onclick = function() {
     let pNodeToReplace = itemToEdit.previousSibling;
     let pNodeToReplaceID = itemToEdit.previousSibling.id;
     let itemCount = pNodeToReplaceID.slice(-1);
-    console.log("itemCount", itemCount);
-    let editIcon = pNodeToReplace.nextSibling;
-    let trashcanIcon = pNodeToReplace.nextSibling.nextSibling;
 
     let parentNodeLi = pNodeToReplace.parentNode;
     parentNodeLi.innerHTML = "";
@@ -180,41 +173,30 @@ const enableEditing = () => {
     inputNode.addEventListener("keyup", function(e) {
       e.preventDefault();
       if (e.keyCode == 13) {
-        // Simulate clicking on the submit button.
-        let newText = inputNode.value;
-        // console.log("new text", newText);
-        parentNodeLi.innerHTML = "";
-
-        let p = document.createElement("p");
-        p.appendChild(document.createTextNode(newText));
-        parentNodeLi.appendChild(p);
-
-        addEditAndDeleteIcons(parentNodeLi, count);
-        enableEditing();
+        saveEdits(inputNode.value, parentNodeLi);
       }
     });
 
-    // on enter
-
-    // parentNodeLi.replaceChild(inputNode, pNodeToReplace);
-    // parentNodeLi.removeEventListener("mouseover", function(event) {
-    //   editIcon.style.display = "block";
-    //   trashcanIcon.style.display = "block";
-    // });
-    // editIcon.style.display = "none";
-    // trashcanIcon.style.display = "none";
-
-    // let parentNodeID = pNodeToReplace.parentNode.id;
-    // console.log("itemToEdit", itemToEdit);
-    // console.log("textToEdit", itemToEdit.previousSibling.innerHTML);
-    console.log("pNodeToReplace", pNodeToReplace);
-    console.log("parentNodeLi", parentNodeLi);
-
-    // get the list item and it's timestamp ID
-    // const completedItem = itemToEdit.previousSibling.innerHTML;
-    // const itemToEditID = this.previousSibling.parentNode.id;
-    // console.log("itemToEditID", itemToEditID);
+    saveIcon.onclick = function() {
+      saveEdits(inputNode.value, parentNodeLi);
+    };
   };
+};
+/*-----------------------------------------------------------------
+SAVE EDITS
+-----------------------------------------------------------------*/
+const saveEdits = (newText, parentNodeLi) => {
+  if (newText !== "") {
+    parentNodeLi.innerHTML = "";
+
+    let p = document.createElement("p");
+    p.appendChild(document.createTextNode(newText));
+    parentNodeLi.appendChild(p);
+    saveToLocalStorage(newText, parentNodeLi.id);
+
+    addEditAndDeleteIcons(parentNodeLi, count);
+    enableEditing();
+  }
 };
 
 /*-----------------------------------------------------------------
@@ -223,7 +205,6 @@ ENABLE CHECKING OF ITEMS
 const enableCheckingOfMarks = () => {
   let checkMark = document.getElementById(`toDo${count}`);
   checkMark.onclick = function() {
-    console.log("checkMark", checkMark);
     completedCount++;
     let HALsection = document.getElementById("HALsection");
     let HALquoteDiv = document.getElementById("HALquote");
