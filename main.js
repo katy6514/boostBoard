@@ -30,6 +30,7 @@ function sortByTimestamp(a, b) {
 LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 -----------------------------------------------------------------*/
 const loadItems = () => {
+  // localStorage.clear();
   const items = { ...localStorage };
 
   const entries = Object.entries(items);

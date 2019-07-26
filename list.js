@@ -121,14 +121,10 @@ const addItemToList = (text, timestamp, listname) => {
       p.setAttribute("id", `toDoText${count}`);
 
       addEditAndDeleteIcons(li, count);
-
       saveToLocalStorage(text, timestamp || newTimestamp);
 
       break;
     case "toDoneList":
-      // count--;
-      completedCount++;
-
       let completedDiv = document.getElementById("completedDiv");
       completedDiv.style.display = "block";
 
@@ -154,9 +150,10 @@ const enableDeleting = () => {
     let parentNodeLi = itemToDelete.parentNode;
     let itemID = parentNodeLi.id;
 
-    console.log("itemToDelete ID", itemID);
-    console.log("LI node to delete", document.getElementById(itemID));
-    // document.getElementById(itemID).remove();
+    document.getElementById(itemID).remove();
+    localStorage.removeItem(itemID);
+    count--;
+    refreshPlaceholderText();
   };
 };
 
@@ -179,11 +176,20 @@ const enableEditing = () => {
     inputNode.setAttribute("class", "todo-input");
     parentNodeLi.appendChild(inputNode);
 
+    let cancelIcon = document.createElement("i");
+    cancelIcon.setAttribute("id", `cancelEdit${count}`);
+    cancelIcon.setAttribute(
+      "class",
+      "material-icons md-36 md-light cancelEdit"
+    );
+    cancelIcon.appendChild(document.createTextNode("cancel"));
+
     let saveIcon = document.createElement("i");
     saveIcon.setAttribute("id", `save${count}`);
-    saveIcon.setAttribute("class", "material-icons md-48 md-light saveItem");
+    saveIcon.setAttribute("class", "material-icons md-36 md-light saveItem");
     saveIcon.appendChild(document.createTextNode("save"));
 
+    parentNodeLi.appendChild(cancelIcon);
     parentNodeLi.appendChild(saveIcon);
 
     inputNode.addEventListener("keyup", function(e) {
@@ -195,6 +201,15 @@ const enableEditing = () => {
 
     saveIcon.onclick = function() {
       saveEdits(inputNode.value, parentNodeLi);
+    };
+
+    cancelIcon.onclick = function() {
+      parentNodeLi.innerHTML = "";
+      parentNodeLi.appendChild(pNodeToReplace);
+      addEditAndDeleteIcons(parentNodeLi, count);
+      enableCheckingOfMarks();
+      enableEditing();
+      enableDeleting();
     };
   };
 };
