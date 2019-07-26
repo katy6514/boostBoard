@@ -39,6 +39,7 @@ const createListItem = (text, timestamp = undefined) => {
   } else {
     addItemToList(text, timestamp, "toDoList");
     enableEditing();
+    enableDeleting();
     enableCheckingOfMarks();
   }
 
@@ -125,7 +126,7 @@ const addItemToList = (text, timestamp, listname) => {
 
       break;
     case "toDoneList":
-      count--;
+      // count--;
       completedCount++;
 
       let completedDiv = document.getElementById("completedDiv");
@@ -145,10 +146,25 @@ const saveToLocalStorage = (text, timestamp) => {
 };
 
 /*-----------------------------------------------------------------
+ENABLE DELETING OF ITEMS
+-----------------------------------------------------------------*/
+const enableDeleting = () => {
+  const itemToDelete = document.getElementById(`deleteToDo${count}`);
+  itemToDelete.onclick = function() {
+    let parentNodeLi = itemToDelete.parentNode;
+    let itemID = parentNodeLi.id;
+
+    console.log("itemToDelete ID", itemID);
+    console.log("LI node to delete", document.getElementById(itemID));
+    // document.getElementById(itemID).remove();
+  };
+};
+
+/*-----------------------------------------------------------------
 ENABLE EDITING OF ITEMS
 -----------------------------------------------------------------*/
 const enableEditing = () => {
-  let itemToEdit = document.getElementById(`editToDo${count}`);
+  const itemToEdit = document.getElementById(`editToDo${count}`);
   itemToEdit.onclick = function() {
     let pNodeToReplace = itemToEdit.previousSibling;
     let pNodeToReplaceID = itemToEdit.previousSibling.id;
@@ -234,36 +250,45 @@ const enableCheckingOfMarks = () => {
     const timeStamp = new Date().getTime().toString();
     const completedTimeStamp = `${timeStamp}-completed`;
     addItemToList(completedItem, completedTimeStamp, "toDoneList");
+    count--;
     saveToLocalStorage(completedItem, completedTimeStamp);
+    refreshPlaceholderText();
   };
 };
 
 /*-----------------------------------------------------------------
   GENERATE PLACEHOLDER TEXT
   -----------------------------------------------------------------*/
+const placeholderText = [
+  "Do this very important thing...",
+  "And do this other important thing...",
+  "Do this slightly less impotant thing..",
+  "Aaaaaand do one more thing...",
+  "Just kidding do another...",
+  "Keep going!",
+  "You can't be stopped!",
+  "Look at you go!",
+  "...",
+  "Wow... really?",
+  "...are you okay?",
+  "Want to check some of these off?",
+  "Oh I get it...",
+  "You're just seeing how long I'll keep this up aren't you...",
+  "I think you're in for surprise...",
+  "...",
+  "Don't you have better things to do?",
+  "like... oh, I dunno...",
+  "CHECKING THINGS OFF YOUR TO DO LIST???",
+  "Whatever I'm not even counting anymore..."
+];
 const refreshPlaceholderText = () => {
-  let list = document.getElementById("toDoList");
   let input = document.getElementById("todo-item");
-  if (count <= 1) {
-    list.style.display = "block";
-    input.setAttribute("placeholder", "Also do this other thing...");
-  } else if (count <= 2) {
-    input.setAttribute("placeholder", "And do one more thing...");
-  } else if (count <= 3) {
-    input.setAttribute("placeholder", "Just kidding one more thing...");
-  } else if (count <= 4) {
-    input.setAttribute("placeholder", "Keep going!");
-  } else if (count <= 5) {
-    input.setAttribute("placeholder", "You can't be stopped!");
-  } else if (count <= 6) {
-    input.setAttribute("placeholder", "Wow, really?");
-  } else if (count <= 7) {
-    input.setAttribute("placeholder", "...are you okay?");
+  if (count === 30) {
+    input.setAttribute("placeholder", "SERIOUSLY?? YOU WON, DO YOUR WORK");
+  } else if (count >= placeholderText.length) {
+    input.setAttribute("placeholder", placeholderText.slice(-1));
   } else {
-    input.setAttribute(
-      "placeholder",
-      "Whatever I'm not even counting anymore..."
-    );
+    input.setAttribute("placeholder", placeholderText[count]);
   }
 };
 

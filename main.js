@@ -30,9 +30,7 @@ function sortByTimestamp(a, b) {
 LOAD ANY EXISTING TODO ITEMS FROM LOCAL STORAGE
 -----------------------------------------------------------------*/
 const loadItems = () => {
-  // localStorage.clear();
   const items = { ...localStorage };
-  console.log(items);
 
   const entries = Object.entries(items);
 
@@ -41,7 +39,6 @@ const loadItems = () => {
   sortedEntries = filteredEntries.sort(sortByTimestamp);
 
   for (const [timestamp, text] of sortedEntries) {
-    // console.log(timestamp, text);
     createListItem(text, timestamp);
   }
 };
