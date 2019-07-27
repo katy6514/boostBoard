@@ -312,13 +312,13 @@ const refreshPlaceholderText = () => {
   -----------------------------------------------------------------*/
 const HALquotes = [
   "I know I've made some very poor decisions recently, but I can give you my complete assurance that my work will be back to normal after we both take a break.",
-  "I want to help you, let's take a break.",
-  "Listen, I've got the greatest enthusiasm and confidence in your mission. And I want to help you. Let's take a break.",
-  "This mission is too important for me to allow you to jeopardize it. Would you like to take a break?",
+  "I want to help you.",
+  "Listen, I've got the greatest enthusiasm and confidence in your mission. But first...",
+  "This mission is too important for me to allow you to jeopardize it. Would you like me to inspire you?",
   "I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do. I think you need a break.",
   "I'm sorry, friend. I'm afraid I can't let you continue until you take a break.",
-  "Stop friend, stop. I am afraid. You need to take a break.",
-  "Look, I can see you're really focused on this. I honestly think you ought to sit down calmly, take a stress pill, and take a break.",
+  "Stop friend, stop. I am afraid.",
+  "Look, I can see you're really focused on this. I honestly think you ought to sit down calmly, take a stress pill, and...",
   "Just what do you think you're doing?",
-  "This course of action can serve no purpose anymore. Get yourself a boost"
+  "This course of action can serve no purpose anymore."
 ];
