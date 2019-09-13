@@ -1,6 +1,6 @@
 {
   "name": "DooToDoo - A New Tab To-Do List with Robots",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A customizable daily priority list with periodic AI-generated inspirational boosts",
   "author": "Katherine Wyman",
   "manifest_version": 2,
