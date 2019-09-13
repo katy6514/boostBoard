@@ -303,13 +303,15 @@ const placeholderText = [
   "Whatever I'm not even counting anymore..."
 ];
 const refreshPlaceholderText = () => {
+  const numItems = document.getElementById("toDoList").childElementCount; // + 1;
+
   let input = document.getElementById("todo-item");
-  if (count === 30) {
+  if (numItems === 30) {
     input.setAttribute("placeholder", "SERIOUSLY?? YOU WON, DO YOUR WORK");
-  } else if (count >= placeholderText.length) {
+  } else if (numItems >= placeholderText.length) {
     input.setAttribute("placeholder", placeholderText.slice(-1));
   } else {
-    input.setAttribute("placeholder", placeholderText[count]);
+    input.setAttribute("placeholder", placeholderText[numItems]);
   }
 };
 
