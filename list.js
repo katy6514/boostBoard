@@ -30,6 +30,7 @@ const completedToday = timestamp => {
 const createListItem = (text, timestamp = undefined) => {
   if (timestamp && timestamp.split("-")[1] === "completed") {
     if (completedToday(timestamp.split("-")[0])) {
+      completedCount++;
       addItemToList(text, timestamp.split("-")[0], "toDoneList");
     } else {
       // console.log(timestamp);
