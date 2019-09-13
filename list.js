@@ -147,12 +147,13 @@ ENABLE DELETING OF ITEMS
 const enableDeleting = () => {
   const itemToDelete = document.getElementById(`deleteToDo${count}`);
   itemToDelete.onclick = function() {
+    // console.log("itemToDelete", itemToDelete);
     let parentNodeLi = itemToDelete.parentNode;
     let itemID = parentNodeLi.id;
 
     document.getElementById(itemID).remove();
     localStorage.removeItem(itemID);
-    count--;
+    // count--;    // potentially resolve the bug?
     refreshPlaceholderText();
   };
 };
@@ -163,6 +164,7 @@ ENABLE EDITING OF ITEMS
 const enableEditing = () => {
   const itemToEdit = document.getElementById(`editToDo${count}`);
   itemToEdit.onclick = function() {
+    // console.log("edit button clicked");
     let pNodeToReplace = itemToEdit.previousSibling;
     let pNodeToReplaceID = itemToEdit.previousSibling.id;
     let itemCount = pNodeToReplaceID.slice(-1);
@@ -236,6 +238,8 @@ ENABLE CHECKING OF ITEMS
 const enableCheckingOfMarks = () => {
   let checkMark = document.getElementById(`toDo${count}`);
   checkMark.onclick = function() {
+    // console.log("checkMark", checkMark);
+    // console.log("count", count);
     completedCount++;
     let HALsection = document.getElementById("HALsection");
     let HALquoteDiv = document.getElementById("HALquote");
@@ -265,7 +269,7 @@ const enableCheckingOfMarks = () => {
     const timeStamp = new Date().getTime().toString();
     const completedTimeStamp = `${timeStamp}-completed`;
     addItemToList(completedItem, completedTimeStamp, "toDoneList");
-    count--;
+    // count--; // potentially resolve the bug?
     saveToLocalStorage(completedItem, completedTimeStamp);
     refreshPlaceholderText();
   };
@@ -277,7 +281,7 @@ const enableCheckingOfMarks = () => {
 const placeholderText = [
   "Do this very important thing...",
   "And do this other important thing...",
-  "Do this slightly less impotant thing..",
+  "Do this slightly less important thing..",
   "Aaaaaand do one more thing...",
   "Just kidding do another...",
   "Keep going!",
@@ -290,6 +294,8 @@ const placeholderText = [
   "Oh I get it...",
   "You're just seeing how long I'll keep this up aren't you...",
   "I think you're in for surprise...",
+  "...",
+  "You realize these are programmed, right?",
   "...",
   "Don't you have better things to do?",
   "like... oh, I dunno...",
